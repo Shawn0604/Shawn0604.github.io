@@ -11,17 +11,17 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&text=%E8%94%A1%E5%B0%9A%E5%B3%B0%E6%9B%B4%E5%A4%9A%E8%B2%93%E5%92%AA&display=swap">
 <style>
-/* Layout: split screen. Left column stays put like a monitoring desk (identity, section index, the office cat cam);
-   right column scrolls through the record. Paper with a faint patch-panel dot grid; the cam is the one loud object. */
+/* Layout: desktop-first 12-column page, 1200px wide. Hero pairs the name with the office cat cam;
+   every section opens with the same head, then uses the full width (table-like rows, 3-up cards, 2x2 rack). */
 :root {
-  --paper: #ECEFF1;
-  --panel: #F8FAFB;
-  --ink: #101820;
-  --muted: #56626D;
-  --faint: #8794A0;
-  --line: #CAD2D9;
+  --paper: #EEF1F3;
+  --panel: #FFFFFF;
+  --ink: #0F1720;
+  --muted: #55616C;
+  --faint: #86929D;
+  --line: #D3DAE0;
   --cable: #1D5BC9;
-  --amber: #B06900;
+  --amber: #A86400;
   --led: #1B9255;
   --rec: #E5484D;
   --term-bg: #10171E;
@@ -37,14 +37,14 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0D1318; --panel: #141C23; --ink: #E3E9EE; --muted: #9AA7B2; --faint: #66737F; --line: #25313B;
+    --paper: #0D1318; --panel: #141C23; --ink: #E5EAEE; --muted: #9DA9B4; --faint: #6C7985; --line: #25313B;
     --cable: #78AAFF; --amber: #F2B441; --led: #3FD48B; --rec: #FF6369;
     --term-bg: #070B0F; --term-fg: #D3DCE4; --term-dim: #6F7E8B; --term-host: #7FB0FF; --term-amber: #F2B441;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #0D1318; --panel: #141C23; --ink: #E3E9EE; --muted: #9AA7B2; --faint: #66737F; --line: #25313B;
+  --paper: #0D1318; --panel: #141C23; --ink: #E5EAEE; --muted: #9DA9B4; --faint: #6C7985; --line: #25313B;
   --cable: #78AAFF; --amber: #F2B441; --led: #3FD48B; --rec: #FF6369;
   --term-bg: #070B0F; --term-fg: #D3DCE4; --term-dim: #6F7E8B; --term-host: #7FB0FF; --term-amber: #F2B441;
   color-scheme: dark;
@@ -52,286 +52,275 @@
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 body {
-  margin: 0;
-  background-color: var(--paper);
-  background-image: radial-gradient(color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 1.4px);
-  background-size: 24px 24px;
-  color: var(--ink);
-  font-family: var(--f-body);
-  font-size: 16px;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--f-body); font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased;
 }
-body::before {
-  content: ""; position: fixed; inset: 0 0 auto;
-  height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper);
-}
+@media (max-width: 700px) { body { font-size: 16px; } }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 20; background: var(--paper); }
 ::selection { background: color-mix(in srgb, var(--cable) 25%, transparent); }
 a { color: var(--cable); text-underline-offset: 3px; }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--cable); outline-offset: 3px; border-radius: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--cable); outline-offset: 3px; border-radius: 4px; }
 h1, h2, h3 { text-wrap: balance; margin: 0; }
 p { margin: 0; }
 ul { margin: 0; padding: 0; list-style: none; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-.page {
-  max-width: 1240px; margin: 0 auto;
-  padding-left: max(24px, env(safe-area-inset-left, 0px));
-  padding-right: max(24px, env(safe-area-inset-right, 0px));
+.wrap {
+  max-width: 1264px; margin: 0 auto;
+  padding-left: max(32px, env(safe-area-inset-left, 0px));
+  padding-right: max(32px, env(safe-area-inset-right, 0px));
 }
-@media (max-width: 600px) {
-  .page { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-}
-.layout { display: grid; grid-template-columns: minmax(0, 1fr); }
-@media (min-width: 1040px) {
-  .layout { grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); gap: 72px; }
+@media (max-width: 700px) {
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 }
 
-/* ================= left: the desk ================= */
-.side { display: flex; flex-direction: column; gap: 36px; padding-block: 56px 24px; }
-@media (min-width: 1040px) {
-  .side {
-    position: sticky; top: 0; height: 100vh; height: 100dvh;
-    padding-block: 56px 40px; justify-content: space-between; gap: 22px; overflow-y: auto; scrollbar-width: none;
-  }
+/* ---------- top bar ---------- */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+.top.scrolled { border-bottom-color: var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 32px; height: 64px; }
+.brand { font-family: var(--f-mono); font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none; margin-right: auto; display: inline-flex; align-items: center; gap: 10px; }
+.brand i { font-style: normal; color: var(--faint); font-weight: 400; }
+.nav { display: flex; gap: 4px; }
+.nav a { position: relative; font-size: 15px; font-weight: 500; color: var(--muted); text-decoration: none; padding: 8px 12px; border-radius: 8px; transition: color .15s, background .15s; }
+.nav a:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.nav a.on { color: var(--ink); }
+.nav a.on::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 2px; height: 2px; border-radius: 2px; background: var(--cable); }
+@media (max-width: 900px) { .nav { display: none; } }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-body); font-size: 15px; font-weight: 600;
+  padding: 11px 20px; border-radius: 999px; text-decoration: none; cursor: pointer;
+  border: 1px solid var(--line); color: var(--ink); background: var(--panel); transition: border-color .15s, color .15s, background .15s;
 }
-.status { display: inline-flex; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); }
+.btn:hover { border-color: var(--ink); }
+.btn.solid { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn.solid:hover { background: var(--cable); border-color: var(--cable); }
+.top .btn { padding: 8px 16px; font-size: 14px; }
+
+/* ---------- hero ---------- */
+.hero .wrap { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 32px; align-items: center; padding-block: 72px 96px; }
+.hero-text { grid-column: 1 / span 7; }
+.hero-cam { grid-column: 8 / span 5; justify-self: end; width: 100%; max-width: 480px; }
+@media (max-width: 1080px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); gap: 48px; padding-block: 48px 72px; }
+  .hero-text, .hero-cam { grid-column: 1; }
+  .hero-cam { justify-self: start; max-width: 520px; }
+}
+.status { display: inline-flex; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: 13px; color: var(--muted); padding: 6px 14px 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); }
+@media (max-width: 420px) { .status { font-size: 11.5px; padding-inline: 10px 12px; gap: 8px; } }
 .led { width: 8px; height: 8px; border-radius: 50%; background: var(--led); box-shadow: 0 0 0 3px color-mix(in srgb, var(--led) 22%, transparent); flex: none; }
-.name { margin-top: 18px; font-family: var(--f-display); font-stretch: 125%; font-weight: 850; font-size: clamp(3rem, 6vw, 4.1rem); line-height: .92; letter-spacing: -.025em; }
-.name .tc { display: block; font-family: var(--f-tc); font-stretch: 100%; font-weight: 500; font-size: .3em; letter-spacing: .32em; color: var(--muted); margin-bottom: 14px; }
-.role { margin-top: 18px; font-family: var(--f-display); font-stretch: 100%; font-weight: 600; font-size: 1.15rem; }
-.tagline { margin-top: 8px; color: var(--muted); max-width: 25em; }
-
-.spy { display: none; }
-@media (min-width: 1040px) {
-  .spy { display: grid; gap: 2px; }
-  .spy a {
-    display: inline-flex; align-items: center; gap: 14px; width: max-content; padding-block: 5px;
-    font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); text-decoration: none;
-  }
-  .spy a::before { content: ""; width: 28px; height: 1px; background: currentColor; transition: width .2s ease, background .2s; }
-  .spy a:hover, .spy a.on { color: var(--ink); }
-  .spy a:hover::before, .spy a.on::before { width: 60px; }
-  .spy a.on::before { background: var(--cable); }
-}
-@media (min-width: 1040px) and (max-height: 939px) { .spy { display: none; } }
-@media (min-width: 1040px) and (min-height: 940px) { .catcam { max-width: 340px; } .spy a { padding-block: 4px; } }
-
-.social { display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--f-mono); font-size: 13px; }
+.hero h1 { margin-top: 28px; font-family: var(--f-display); font-stretch: 125%; font-weight: 850; font-size: clamp(3rem, 7.2vw, 6rem); line-height: .9; letter-spacing: -.03em; }
+.hero h1 .tc { display: block; font-family: var(--f-tc); font-stretch: 100%; font-weight: 500; font-size: max(.24em, 15px); letter-spacing: .34em; color: var(--muted); margin-bottom: 18px; }
+.lede { margin-top: 28px; font-size: clamp(1.1rem, 1.5vw, 1.3rem); line-height: 1.55; max-width: 30em; }
+.lede span { color: var(--muted); }
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 36px; }
+.social { display: flex; gap: 18px; font-family: var(--f-mono); font-size: 14px; }
 .social a { color: var(--muted); text-decoration: none; }
 .social a:hover { color: var(--cable); }
 
-/* ---------- the cat cam ---------- */
-.catcam { margin: 0; width: 100%; max-width: 400px; }
-@media (min-width: 1040px) { .catcam { max-width: 380px; } }
-@media (min-width: 1040px) and (max-height: 760px) { .catcam { max-width: 300px; } }
+/* ---------- the office cat cam ---------- */
+.catcam { margin: 0; }
 .cam-body {
-  background: var(--term-bg); border-radius: 14px; padding: 10px;
-  box-shadow: 0 1px 0 color-mix(in srgb, #fff 6%, transparent) inset, 0 30px 60px -30px color-mix(in srgb, #000 60%, transparent), 0 0 0 1px color-mix(in srgb, var(--ink) 10%, transparent);
-  transform: rotate(-1.2deg); transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  background: var(--term-bg); border-radius: 18px; padding: 12px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 10%, transparent), 0 40px 80px -40px color-mix(in srgb, #000 65%, transparent);
+  transform: rotate(1.5deg); transition: transform .4s cubic-bezier(.2,.8,.2,1);
 }
-.catcam:hover .cam-body { transform: rotate(0deg); }
-.cam-screen {
-  position: relative; aspect-ratio: 4 / 3; max-width: 100%; overflow: hidden; border-radius: 7px;
-  background: #1A232B; display: grid; place-items: center; isolation: isolate;
-}
-.cam-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.7) contrast(1.08) brightness(.95); transition: filter .4s; }
+.catcam:hover .cam-body { transform: rotate(0deg) translateY(-2px); }
+.cam-screen { position: relative; aspect-ratio: 4 / 3; max-width: 100%; overflow: hidden; border-radius: 9px; background: #1A232B; display: grid; place-items: center; isolation: isolate; }
+.cam-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.72) contrast(1.08) brightness(.95); transition: filter .4s; }
 .catcam:hover .cam-screen img { filter: none; }
 .cam-screen::after {
   content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
-  background:
-    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,.16) 2px 3px),
-    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%);
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,.14) 2px 3px), radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,.5) 100%);
 }
-.cat-ascii { margin: 0; font-family: var(--f-mono); font-size: 16px; line-height: 1.3; color: #7C8B98; position: relative; z-index: 1; }
+.cat-ascii { margin: 0; font-family: var(--f-mono); font-size: 18px; line-height: 1.3; color: #7C8B98; position: relative; z-index: 1; }
 .cam-noise { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; z-index: 3; opacity: 0; transition: opacity .12s; pointer-events: none; }
 .cam-screen.switching .cam-noise { opacity: .9; }
-.osd { position: absolute; z-index: 4; font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; color: #F2F5F7; text-shadow: 0 1px 2px rgba(0,0,0,.8); font-variant-numeric: tabular-nums; pointer-events: none; }
-.osd-tl { top: 9px; left: 11px; display: flex; align-items: center; gap: 6px; }
-.osd-tr { top: 9px; right: 11px; text-transform: uppercase; }
-.osd-bl { bottom: 8px; left: 11px; }
-.osd-br { bottom: 8px; right: 11px; }
-.rec { width: 7px; height: 7px; border-radius: 50%; background: var(--rec); box-shadow: 0 0 6px var(--rec); animation: blink 1.4s steps(1) infinite; }
-.cam-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 4px 4px 6px; }
-.cam-meta { display: flex; flex-direction: column; font-family: var(--f-mono); font-size: 11.5px; line-height: 1.45; color: var(--term-dim); min-width: 0; }
-.cam-meta b { color: var(--term-fg); font-weight: 500; font-size: 12.5px; }
+.osd { position: absolute; z-index: 4; font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; color: #F2F5F7; text-shadow: 0 1px 2px rgba(0,0,0,.8); font-variant-numeric: tabular-nums; pointer-events: none; }
+.osd-tl { top: 11px; left: 13px; display: flex; align-items: center; gap: 7px; }
+.osd-tr { top: 11px; right: 13px; }
+.osd-bl { bottom: 10px; left: 13px; }
+.osd-br { bottom: 10px; right: 13px; }
+.rec { width: 8px; height: 8px; border-radius: 50%; background: var(--rec); box-shadow: 0 0 6px var(--rec); animation: blink 1.4s steps(1) infinite; }
+.cam-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 6px 4px 8px; }
+.cam-meta { display: flex; flex-direction: column; font-family: var(--f-mono); font-size: 12px; line-height: 1.5; color: var(--term-dim); min-width: 0; }
+.cam-meta b { color: var(--term-fg); font-weight: 500; font-size: 13.5px; }
 .cam-meta span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cat-btn {
-  flex: none; display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--f-tc), var(--f-body); font-weight: 700; font-size: 14px; letter-spacing: .04em;
-  padding: 10px 16px; border-radius: 999px; border: 0; cursor: pointer;
-  background: var(--term-amber); color: #1A1204;
-  box-shadow: 0 3px 0 color-mix(in srgb, var(--term-amber) 55%, #000);
-  transition: transform .08s, box-shadow .08s, filter .15s;
+  flex: none; display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-tc), var(--f-body); font-weight: 700; font-size: 15px; letter-spacing: .04em;
+  padding: 11px 18px; border-radius: 999px; border: 0; cursor: pointer; background: var(--term-amber); color: #1A1204;
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--term-amber) 55%, #000); transition: transform .08s, box-shadow .08s, filter .15s;
 }
 .cat-btn:hover { filter: brightness(1.06); }
-.cat-btn:active { transform: translateY(3px); box-shadow: 0 0 0 color-mix(in srgb, var(--term-amber) 55%, #000); }
+.cat-btn:active { transform: translateY(3px); box-shadow: 0 0 0 transparent; }
 .cat-btn:disabled { cursor: progress; filter: saturate(.6); }
-.cat-btn svg { width: 16px; height: 16px; fill: currentColor; }
-.cam-hint { margin-top: 12px; font-family: var(--f-mono); font-size: 11.5px; color: var(--faint); }
-.cam-hint kbd { font: inherit; padding: 1px 6px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; color: var(--muted); background: var(--panel); }
+.cat-btn svg { width: 17px; height: 17px; fill: currentColor; }
+.cam-hint { margin-top: 16px; text-align: center; font-family: var(--f-mono); font-size: 12px; color: var(--faint); }
+.cam-hint kbd { font: inherit; padding: 1px 7px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; color: var(--muted); background: var(--panel); }
 @media (hover: none) { .cam-hint { display: none; } }
 
-/* ================= right: the record ================= */
-.content { display: grid; gap: 96px; padding-block: 64px 48px; min-width: 0; }
-@media (max-width: 1039px) { .content { gap: 72px; padding-top: 24px; } }
-.content > section { scroll-margin-top: 48px; min-width: 0; }
-.sec-label {
-  font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--ink);
-  margin-bottom: 24px;
-}
-@media (max-width: 1039px) {
-  .sec-label {
-    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
-    margin-inline: -16px; padding: 14px 16px;
-    background: color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter: blur(8px);
-  }
-}
-@media (min-width: 1040px) { .sec-label { color: var(--faint); } }
+/* ---------- sections ---------- */
+.block { border-top: 1px solid var(--line); }
+.block > .wrap { padding-block: 96px; }
+@media (max-width: 700px) { .block > .wrap { padding-block: 64px; } }
+.sec-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 32px; align-items: end; margin-bottom: 48px; }
+.sec-head .t { grid-column: 1 / span 7; }
+.sec-head .note { grid-column: 9 / span 4; color: var(--muted); font-size: 16px; }
+@media (max-width: 900px) { .sec-head { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 32px; } .sec-head .t, .sec-head .note { grid-column: 1; } }
+.eyebrow { display: block; font-family: var(--f-mono); font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--cable); margin-bottom: 12px; }
+.sec-head h2 { font-family: var(--f-display); font-stretch: 112%; font-weight: 800; font-size: clamp(2rem, 3.6vw, 2.9rem); line-height: 1.05; letter-spacing: -.015em; }
 
-.about p { color: var(--muted); max-width: 36em; }
-.about p + p { margin-top: 16px; }
-.about strong { color: var(--ink); font-weight: 500; }
-
-/* traceroute console */
-.term {
-  margin-top: 36px; background: var(--term-bg); color: var(--term-fg);
-  border-radius: 12px; font-family: var(--f-mono); font-size: 13px; line-height: 1.75; overflow: hidden;
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 10%, transparent), 0 24px 48px -28px color-mix(in srgb, #000 50%, transparent);
-}
-.term-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid color-mix(in srgb, var(--term-fg) 12%, transparent); color: var(--term-dim); font-size: 12px; }
+/* about: text + traceroute side by side */
+.about-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 32px; align-items: start; }
+.about-text { grid-column: 1 / span 5; display: grid; gap: 18px; color: var(--muted); }
+.about-text strong { color: var(--ink); font-weight: 600; }
+.term { grid-column: 7 / span 6; }
+@media (max-width: 1080px) { .about-grid { grid-template-columns: minmax(0, 1fr); } .about-text, .term { grid-column: 1; } .about-text { max-width: 40em; } }
+.term { background: var(--term-bg); color: var(--term-fg); border-radius: 14px; font-family: var(--f-mono); font-size: 13.5px; line-height: 1.8; overflow: hidden; min-width: 0;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 10%, transparent), 0 30px 60px -36px color-mix(in srgb, #000 55%, transparent); }
+.term-bar { display: flex; align-items: center; gap: 8px; padding: 11px 16px; border-bottom: 1px solid color-mix(in srgb, var(--term-fg) 12%, transparent); color: var(--term-dim); font-size: 12px; }
 .term-bar i { width: 10px; height: 10px; border-radius: 50%; background: color-mix(in srgb, var(--term-fg) 18%, transparent); }
 .term-bar span { margin-left: auto; }
-.term-body { padding: 16px 18px 18px; overflow-x: auto; }
+.term-body { padding: 18px 20px 20px; overflow-x: auto; }
 .term-body pre { margin: 0; font: inherit; white-space: pre; }
 .prompt { color: var(--term-dim); }
-.hops { display: grid; gap: 6px; margin-top: 10px; }
-.hop { display: grid; grid-template-columns: 2ch minmax(15ch, auto) 1fr; column-gap: 2ch; animation: hop-in .35s ease-out backwards; }
+.hops { display: grid; gap: 4px; margin-top: 12px; }
+.hop { display: grid; grid-template-columns: 2ch 16ch 19ch minmax(0, 1fr); column-gap: 2ch; white-space: nowrap; }
 .hop .n { color: var(--term-dim); text-align: right; }
 .hop .h { color: var(--term-host); }
 .hop .d { color: var(--term-dim); }
-.hop .r { grid-column: 3; }
 .hop.next .n, .hop.next .h, .hop.next .r { color: var(--term-amber); }
-.hop:nth-child(1) { animation-delay: .15s; } .hop:nth-child(2) { animation-delay: .3s; }
-.hop:nth-child(3) { animation-delay: .45s; } .hop:nth-child(4) { animation-delay: .6s; }
-.hop:nth-child(5) { animation-delay: .8s; }
 .caret { display: inline-block; width: .6em; height: 1.1em; vertical-align: -.2em; background: var(--term-amber); animation: blink 1.1s steps(1) infinite; }
-@keyframes hop-in { from { transform: translateX(-6px); } }
 @keyframes blink { 50% { opacity: 0; } }
-@media (max-width: 520px) {
+@media (max-width: 760px) {
   .term { font-size: 12px; }
-  .hop { grid-template-columns: 2ch minmax(0, 1fr); }
+  .hop { grid-template-columns: 2ch minmax(0, 1fr); white-space: normal; }
   .hop .d, .hop .r { grid-column: 2; }
 }
 
-/* record rows: experience, projects, education */
-.rows { display: grid; gap: 8px; isolation: isolate; }
-.row { position: relative; display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 4px 28px; padding: 22px 0; }
-.row::before {
-  content: ""; position: absolute; inset: 0 -22px; border-radius: 10px; z-index: -1;
-  background: var(--panel); box-shadow: 0 0 0 1px var(--line), 0 18px 40px -30px color-mix(in srgb, #000 40%, transparent);
-  opacity: 0; transition: opacity .2s;
-}
-@media (min-width: 1040px) {
-  .rows:hover .row { opacity: .55; }
-  .rows .row { transition: opacity .2s; }
-  .rows .row:hover { opacity: 1; }
-  .row:hover::before { opacity: 1; }
-  .row:hover h3 { color: var(--cable); }
-}
-@media (max-width: 640px) { .row { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 18px 0; } }
-.when { font-family: var(--f-mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--faint); padding-top: 4px; font-variant-numeric: tabular-nums; }
-.row h3 { font-family: var(--f-display); font-stretch: 100%; font-weight: 700; font-size: 1.12rem; line-height: 1.3; transition: color .2s; }
-.row h3 .at { color: var(--muted); font-weight: 500; }
-.row .loc { font-size: 14px; color: var(--faint); margin-top: 2px; }
-.row ul { display: grid; gap: 8px; margin-top: 12px; color: var(--muted); font-size: 15px; }
-.row li { position: relative; padding-left: 18px; }
-.row li::before { content: ""; position: absolute; left: 2px; top: .75em; width: 7px; height: 1px; background: var(--faint); }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-.tag { font-family: var(--f-mono); font-size: 11.5px; padding: 3px 9px; border-radius: 999px; color: var(--cable); background: color-mix(in srgb, var(--cable) 10%, transparent); }
+/* experience: date | role | detail */
+.jobs { border-top: 1px solid var(--line); }
+.job { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px 32px; padding-block: 36px; border-bottom: 1px solid var(--line); }
+.job .when { grid-column: 1 / span 2; font-family: var(--f-mono); font-size: 13.5px; color: var(--muted); padding-top: 4px; font-variant-numeric: tabular-nums; }
+.job .role { grid-column: 3 / span 4; }
+.job .detail { grid-column: 7 / span 6; }
+.job h3 { font-family: var(--f-display); font-stretch: 105%; font-weight: 750; font-size: 1.35rem; line-height: 1.2; }
+.job .org { margin-top: 4px; color: var(--muted); }
+.job .org small { display: block; font-size: 14px; color: var(--faint); }
+.job ul { display: grid; gap: 10px; color: var(--muted); font-size: 16px; }
+.job li { position: relative; padding-left: 20px; }
+.job li::before { content: ""; position: absolute; left: 2px; top: .78em; width: 8px; height: 1.5px; background: var(--cable); }
+@media (max-width: 1080px) { .job .when { grid-column: 1 / span 3; } .job .role { grid-column: 4 / span 9; } .job .detail { grid-column: 4 / span 9; } }
+@media (max-width: 700px) { .job { grid-template-columns: minmax(0, 1fr); padding-block: 28px; } .job .when, .job .role, .job .detail { grid-column: 1; } }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.tag { font-family: var(--f-mono); font-size: 12px; padding: 3px 10px; border-radius: 999px; color: var(--muted); background: color-mix(in srgb, var(--ink) 6%, transparent); }
 
-/* project rows lead with their numbers */
-.fig { display: flex; flex-direction: column; gap: 10px; padding-top: 2px; }
+/* projects: 3-up cards */
+.projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 1080px) { .projects { grid-template-columns: minmax(0, 1fr); } }
+.proj { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 28px; transition: border-color .2s, transform .2s, box-shadow .2s; }
+.proj:hover { border-color: color-mix(in srgb, var(--cable) 45%, var(--line)); transform: translateY(-3px); box-shadow: 0 24px 48px -32px color-mix(in srgb, #000 45%, transparent); }
+.fig { display: flex; gap: 28px; padding-bottom: 22px; margin-bottom: 22px; border-bottom: 1px dashed var(--line); }
 .fig div { display: flex; flex-direction: column; }
-.fig b { font-family: var(--f-display); font-stretch: 115%; font-weight: 850; font-size: 2rem; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
-.fig span { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--faint); }
-@media (max-width: 640px) { .fig { flex-direction: row; gap: 24px; } }
-.row .why { margin-top: 6px; color: var(--ink); }
+.fig b { font-family: var(--f-display); font-stretch: 115%; font-weight: 850; font-size: 2.6rem; line-height: 1; color: var(--cable); font-variant-numeric: tabular-nums; }
+.fig span { margin-top: 6px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--faint); }
+.proj h3 { font-family: var(--f-display); font-stretch: 105%; font-weight: 800; font-size: 1.3rem; line-height: 1.2; }
+.proj .why { margin-top: 8px; color: var(--ink); font-size: 16px; }
+.proj ul { display: grid; gap: 10px; margin-top: 18px; color: var(--muted); font-size: 15px; }
+.proj li { position: relative; padding-left: 20px; }
+.proj li::before { content: "→"; position: absolute; left: 0; top: .05em; color: var(--cable); font-family: var(--f-mono); font-size: 13px; }
+.proj .tags { margin-top: auto; padding-top: 22px; }
 
-.earlier { margin-top: 40px; }
-.earlier h3 { font-family: var(--f-mono); font-size: 11.5px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px; }
-.earlier a { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr) auto; gap: 4px 28px; align-items: baseline; padding-block: 14px; border-top: 1px solid var(--line); text-decoration: none; color: var(--ink); }
-.earlier li:last-child a { border-bottom: 1px solid var(--line); }
-.earlier .nm { font-weight: 600; font-size: 15px; }
-.earlier .ds { color: var(--muted); font-size: 14.5px; }
-.earlier .go { font-family: var(--f-mono); font-size: 12px; color: var(--faint); transition: transform .2s, color .2s; }
-.earlier a:hover .nm, .earlier a:hover .go { color: var(--cable); }
-.earlier a:hover .go { transform: translate(2px, -2px); }
-@media (max-width: 640px) { .earlier a { grid-template-columns: minmax(0, 1fr) auto; } .earlier .ds { grid-column: 1 / -1; grid-row: 2; } }
+.earlier { margin-top: 56px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 32px; }
+.earlier h3 { grid-column: 1 / span 3; font-family: var(--f-display); font-stretch: 105%; font-weight: 750; font-size: 1.1rem; }
+.earlier h3 small { display: block; margin-top: 4px; font-family: var(--f-body); font-weight: 400; font-size: 15px; color: var(--muted); }
+.earlier ul { grid-column: 4 / span 9; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.earlier a { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 18px 20px; border-radius: 12px; border: 1px solid var(--line); text-decoration: none; color: var(--ink); transition: border-color .2s; }
+.earlier a:hover { border-color: var(--cable); }
+.earlier .nm { display: flex; justify-content: space-between; gap: 8px; font-weight: 600; }
+.earlier .nm span { font-family: var(--f-mono); color: var(--faint); transition: color .2s, transform .2s; }
+.earlier a:hover .nm span { color: var(--cable); transform: translate(2px, -2px); }
+.earlier .ds { color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+@media (max-width: 1080px) { .earlier { grid-template-columns: minmax(0, 1fr); gap: 16px; } .earlier h3, .earlier ul { grid-column: 1; } }
+@media (max-width: 760px) { .earlier ul { grid-template-columns: minmax(0, 1fr); } }
 
-/* skills rack */
-.rack { border-radius: 12px; background: var(--panel); box-shadow: 0 0 0 1px var(--line); overflow: hidden; }
-.unit { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: stretch; border-top: 1px solid var(--line); }
-.unit:first-child { border-top: 0; }
-.unit .u { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-right: 1px solid var(--line); font-family: var(--f-mono); font-size: 10.5px; color: var(--faint); background: color-mix(in srgb, var(--ink) 3%, transparent); }
+/* skills: 2x2 rack */
+.rack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+@media (max-width: 900px) { .rack { grid-template-columns: minmax(0, 1fr); } }
+.unit { display: grid; grid-template-columns: 52px minmax(0, 1fr); background: var(--panel); }
+.unit .u { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-right: 1px solid var(--line); font-family: var(--f-mono); font-size: 11px; color: var(--faint); background: color-mix(in srgb, var(--ink) 3%, var(--panel)); }
 .unit .u .led { width: 6px; height: 6px; box-shadow: none; }
-.unit .in { padding: 16px 20px 18px; }
-.unit h3 { font-family: var(--f-display); font-stretch: 100%; font-weight: 700; font-size: .98rem; }
-.unit .tags { margin-top: 10px; }
-.unit .tag { color: var(--muted); background: color-mix(in srgb, var(--ink) 6%, transparent); }
-.langs { display: flex; flex-wrap: wrap; gap: 12px 44px; margin-top: 28px; }
-.langs div { display: flex; flex-direction: column; }
-.langs b { font-family: var(--f-display); font-stretch: 110%; font-weight: 800; font-size: 1.2rem; }
-.langs span { font-family: var(--f-mono); font-size: 12px; color: var(--faint); }
+.unit .in { padding: 24px 26px 26px; }
+.unit h3 { font-family: var(--f-display); font-stretch: 105%; font-weight: 750; font-size: 1.1rem; }
+.langs { display: flex; flex-wrap: wrap; gap: 16px 56px; margin-top: 36px; }
+.langs div { display: flex; align-items: baseline; gap: 12px; }
+.langs b { font-family: var(--f-display); font-stretch: 110%; font-weight: 800; font-size: 1.25rem; }
+.langs span { font-family: var(--f-mono); font-size: 13px; color: var(--faint); }
 
-.row.next .when { color: var(--amber); }
+/* education */
+.edu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 900px) { .edu { grid-template-columns: minmax(0, 1fr); } }
+.school { display: flex; flex-direction: column; gap: 6px; padding: 28px; border-radius: 16px; border: 1px solid var(--line); background: var(--panel); }
+.school.next { border-color: color-mix(in srgb, var(--amber) 50%, var(--line)); }
+.school .when { font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
+.school.next .when { color: var(--amber); }
+.school h3 { font-family: var(--f-display); font-stretch: 105%; font-weight: 800; font-size: 1.4rem; line-height: 1.2; margin-top: 4px; }
+.school p { color: var(--muted); }
 
 /* contact */
-.contact h2 { font-family: var(--f-display); font-stretch: 125%; font-weight: 850; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1; letter-spacing: -.02em; }
-.contact p { color: var(--muted); margin-top: 16px; max-width: 34em; }
-.mailrow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-top: 28px; }
-.mail { font-family: var(--f-mono); font-size: clamp(1rem, 2.4vw, 1.35rem); font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--cable); padding-bottom: 2px; overflow-wrap: anywhere; }
-.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--f-mono); font-size: 13px; font-weight: 500;
-  padding: 9px 16px; border-radius: 999px; text-decoration: none;
-  border: 1px solid var(--line); color: var(--ink); background: var(--panel); cursor: pointer; transition: border-color .15s, color .15s;
-}
-.btn:hover { border-color: var(--cable); color: var(--cable); }
+.contact-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 32px; align-items: end; }
+.contact-grid > div:first-child { grid-column: 1 / span 7; }
+.contact-grid > div:last-child { grid-column: 8 / span 5; justify-self: end; }
+@media (max-width: 900px) { .contact-grid { grid-template-columns: minmax(0, 1fr); } .contact-grid > div:first-child, .contact-grid > div:last-child { grid-column: 1; justify-self: start; } }
+.contact h2 { font-family: var(--f-display); font-stretch: 125%; font-weight: 850; font-size: clamp(2.6rem, 6vw, 4.8rem); line-height: .95; letter-spacing: -.025em; }
+.contact p { color: var(--muted); margin-top: 20px; max-width: 32em; }
+.mail { display: inline-block; font-family: var(--f-mono); font-size: clamp(1.05rem, 2vw, 1.4rem); font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--cable); padding-bottom: 2px; overflow-wrap: anywhere; }
+.mail-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 
-.foot { font-family: var(--f-mono); font-size: 12px; color: var(--faint); line-height: 1.7; padding-top: 32px; border-top: 1px solid var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px 40px; border-top: 1px solid var(--line); font-family: var(--f-mono); font-size: 12.5px; color: var(--faint); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hop, .caret, .rec { animation: none; }
-  .cam-body, .catcam:hover .cam-body { transform: none; transition: none; }
+  .caret, .rec { animation: none; }
+  .cam-body, .catcam:hover .cam-body, .proj:hover { transform: none; transition: none; }
 }
 </style>
 </head>
 <body>
-<div class="page">
-  <div class="layout">
+<header class="top" id="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="led" aria-hidden="true"></span><span>shawn<i>.tsai</i></span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#about" data-for="about">About</a>
+      <a href="#experience" data-for="experience">Experience</a>
+      <a href="#projects" data-for="projects">Projects</a>
+      <a href="#skills" data-for="skills">Skills</a>
+      <a href="#education" data-for="education">Education</a>
+    </nav>
+    <a class="btn solid" href="#contact">Contact</a>
+  </div>
+</header>
 
-    <header class="side">
-      <div>
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-text">
         <div class="status"><span class="led" aria-hidden="true"></span>Taipei → Melbourne · RMIT from Feb 2027</div>
-        <h1 class="name"><span class="tc" lang="zh-Hant">蔡尚峰</span>Shawn Tsai</h1>
-        <p class="role">IT Engineer</p>
-        <p class="tagline">I keep networks, servers and offices running, and build the internal tools when nothing off the shelf fits.</p>
+        <h1><span class="tc" lang="zh-Hant">蔡尚峰</span>Shawn Tsai</h1>
+        <p class="lede">IT engineer. I keep networks, servers and offices running, <span>and build the internal tools when nothing off the shelf fits.</span></p>
+        <div class="cta">
+          <a class="btn solid" href="#projects">See my projects</a>
+          <a class="btn" href="#experience">Experience</a>
+          <div class="social">
+            <a href="https://github.com/Shawn0604" target="_blank" rel="noopener">GitHub ↗</a>
+            <a href="https://www.linkedin.com/in/%E5%B0%9A%E5%B3%B0-%E8%94%A1-341a1b236/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+        </div>
       </div>
 
-      <nav class="spy" aria-label="Sections">
-        <a href="#about" data-for="about">About</a>
-        <a href="#experience" data-for="experience">Experience</a>
-        <a href="#projects" data-for="projects">Projects</a>
-        <a href="#skills" data-for="skills">Skills</a>
-        <a href="#education" data-for="education">Education</a>
-        <a href="#contact" data-for="contact">Contact</a>
-      </nav>
-
-      <div>
+      <div class="hero-cam">
         <figure class="catcam" aria-label="Office cat camera showing a random cat from The Cat API">
           <div class="cam-body">
             <div class="cam-screen" id="cam-screen">
@@ -341,7 +330,7 @@ ul { margin: 0; padding: 0; list-style: none; }
  > ^ &lt;</pre>
               <canvas class="cam-noise" id="cam-noise" width="160" height="120" aria-hidden="true"></canvas>
               <div class="osd osd-tl" aria-hidden="true"><span class="rec"></span>REC · CAM-01</div>
-              <div class="osd osd-tr" id="cam-watch" aria-hidden="true">About</div>
+              <div class="osd osd-tr" aria-hidden="true">OFFICE</div>
               <div class="osd osd-bl" id="cam-time" aria-hidden="true"></div>
               <div class="osd osd-br" id="cam-count" aria-hidden="true">CAT 000</div>
             </div>
@@ -354,24 +343,22 @@ ul { margin: 0; padding: 0; list-style: none; }
             </div>
           </div>
         </figure>
-        <p class="cam-hint">or press <kbd>C</kbd> anywhere for another cat</p>
+        <p class="cam-hint">or press <kbd>C</kbd> for another cat</p>
       </div>
+    </div>
+  </section>
 
-      <ul class="social">
-        <li><a href="https://github.com/Shawn0604" target="_blank" rel="noopener">GitHub ↗</a></li>
-        <li><a href="https://www.linkedin.com/in/%E5%B0%9A%E5%B3%B0-%E8%94%A1-341a1b236/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
-        <li><a href="#contact">Email</a></li>
-      </ul>
-    </header>
-
-    <main class="content">
-
-      <section class="about" id="about" data-label="About">
-        <h2 class="sec-label">About</h2>
-        <p>I'm an IT engineer from Taipei. At <strong>CoAsia Electronics</strong> I looked after the network, servers and people in our Taipei office, and supported colleagues remotely in five other countries.</p>
-        <p>I studied <strong>mathematics</strong> at National Taiwan Normal University and trained as a <strong>full-stack developer</strong> at AppWorks School, so when a problem at work needed a tool, I usually built it: a self-hosted remote support platform, a booking system for 21 meeting rooms, and the lucky draw app we ran on stage.</p>
-        <p>In February 2027 I start a <strong>Master of Information Technology at RMIT University</strong> in Melbourne. The cat stays.</p>
-
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="t"><span class="eyebrow">About</span><h2>From maths to the server room</h2></div>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm an IT engineer from Taipei. At <strong>CoAsia Electronics</strong> I looked after the network, servers and people in our Taipei office, and supported colleagues remotely in five other countries.</p>
+          <p>I studied <strong>mathematics</strong> at National Taiwan Normal University and trained as a <strong>full-stack developer</strong> at AppWorks School. So when a problem at work needed a tool, I usually built it.</p>
+          <p>In February 2027 I start a <strong>Master of Information Technology at RMIT University</strong> in Melbourne.</p>
+        </div>
         <div class="term" role="img" aria-label="Career path as a traceroute: NTNU mathematics 2020 to 2024, AppWorks School 2023, NTNU research assistant 2023 to 2024, CoAsia Electronics IT engineer 2025 to 2026, next hop RMIT University Melbourne 2027.">
           <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>shawn@taipei: ~</span></div>
           <div class="term-body" aria-hidden="true">
@@ -379,161 +366,181 @@ ul { margin: 0; padding: 0; list-style: none; }
             <pre class="prompt">traceroute to melbourne, 5 hops max</pre>
             <div class="hops">
               <div class="hop"><span class="n">1</span><span class="h">ntnu.edu.tw</span><span class="d">2020 – 2024</span><span class="r">B.S. Mathematics</span></div>
-              <div class="hop"><span class="n">2</span><span class="h">appworks.school</span><span class="d">Sep – Dec 2023</span><span class="r">Software engineering trainee</span></div>
+              <div class="hop"><span class="n">2</span><span class="h">appworks.school</span><span class="d">Sep – Dec 2023</span><span class="r">SWE trainee</span></div>
               <div class="hop"><span class="n">3</span><span class="h">ntnu.edu.tw</span><span class="d">Oct 2023 – Mar 2024</span><span class="r">Research assistant</span></div>
               <div class="hop"><span class="n">4</span><span class="h">coasia.com</span><span class="d">Jul 2025 – Sep 2026</span><span class="r">IT engineer</span></div>
               <div class="hop next"><span class="n">5</span><span class="h">rmit.edu.au</span><span class="d">Feb 2027 →</span><span class="r">Master of IT <span class="caret"></span></span></div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <section id="experience" data-label="Experience">
-        <h2 class="sec-label">Experience</h2>
-        <div class="rows">
-          <article class="row">
-            <div class="when">Jul 2025 – Sep 2026</div>
-            <div>
-              <h3>IT Engineer <span class="at">· CoAsia Electronics</span></h3>
-              <p class="loc">Taipei, Taiwan</p>
-              <ul>
-                <li>On-site IT support in Taipei and remote support for five other countries: hardware, software, user accounts, endpoint security and IP telephony.</li>
-                <li>Managed FortiGate firewall policies and SSL-VPN / IPsec connectivity. Ran regular Nessus vulnerability scans, tracked remediation and wrote the security documentation for ISO 27001.</li>
-                <li>Maintained Active Directory and GPO, VMware vSphere (including HA failover tests), Synology NAS, Cloudflare DNS and Google Workspace.</li>
-                <li>Tested the NAVER WORKS integration end to end, checking user-facing functions in both systems and approval-workflow permissions.</li>
-              </ul>
-              <div class="tags"><span class="tag">FortiGate</span><span class="tag">AD / GPO</span><span class="tag">vSphere HA</span><span class="tag">Nessus</span><span class="tag">ISO 27001</span><span class="tag">Google Workspace</span></div>
-            </div>
-          </article>
-          <article class="row">
-            <div class="when">Oct 2023 – Mar 2024</div>
-            <div>
-              <h3>Research Assistant <span class="at">· National Taiwan Normal University</span></h3>
-              <p class="loc">Taipei, Taiwan</p>
-              <ul>
-                <li>Built an interactive English-learning system that drives a robot through MQTT messages, triggered by NFC tags and QR codes.</li>
-              </ul>
-              <div class="tags"><span class="tag">MQTT</span><span class="tag">NFC</span><span class="tag">Robotics</span></div>
-            </div>
-          </article>
-          <article class="row">
-            <div class="when">Sep – Dec 2023</div>
-            <div>
-              <h3>Software Engineering Trainee <span class="at">· AppWorks School</span></h3>
-              <p class="loc">Taipei, Taiwan</p>
-              <ul>
-                <li>Completed full-stack training and built a travel booking web app with FastAPI, MySQL, JWT authentication and payment integration.</li>
-              </ul>
-              <div class="tags"><span class="tag">FastAPI</span><span class="tag">MySQL</span><span class="tag">JWT</span></div>
-            </div>
-          </article>
-        </div>
-      </section>
+  <section class="block" id="experience">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="t"><span class="eyebrow">Experience</span><h2>Where I've worked</h2></div>
+      </div>
+      <div class="jobs">
+        <article class="job">
+          <div class="when">Jul 2025 –<br>Sep 2026</div>
+          <div class="role">
+            <h3>IT Engineer</h3>
+            <p class="org">CoAsia Electronics Corporation<small>Taipei, Taiwan</small></p>
+            <div class="tags"><span class="tag">FortiGate</span><span class="tag">AD / GPO</span><span class="tag">vSphere HA</span><span class="tag">Nessus</span><span class="tag">ISO 27001</span><span class="tag">Google Workspace</span></div>
+          </div>
+          <div class="detail">
+            <ul>
+              <li>On-site IT support in Taipei and remote support for five other countries: hardware, software, user accounts, endpoint security and IP telephony.</li>
+              <li>Managed FortiGate firewall policies and SSL-VPN / IPsec connectivity. Ran regular Nessus vulnerability scans, tracked remediation and wrote the security documentation for ISO 27001.</li>
+              <li>Maintained Active Directory and GPO, VMware vSphere (including HA failover tests), Synology NAS, Cloudflare DNS and Google Workspace.</li>
+              <li>Tested the NAVER WORKS integration end to end, checking user-facing functions in both systems and approval-workflow permissions.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="job">
+          <div class="when">Oct 2023 –<br>Mar 2024</div>
+          <div class="role">
+            <h3>Research Assistant</h3>
+            <p class="org">National Taiwan Normal University<small>Taipei, Taiwan</small></p>
+            <div class="tags"><span class="tag">MQTT</span><span class="tag">NFC</span><span class="tag">Robotics</span></div>
+          </div>
+          <div class="detail">
+            <ul><li>Built an interactive English-learning system that drives a robot through MQTT messages, triggered by NFC tags and QR codes.</li></ul>
+          </div>
+        </article>
+        <article class="job">
+          <div class="when">Sep 2023 –<br>Dec 2023</div>
+          <div class="role">
+            <h3>Software Engineering Trainee</h3>
+            <p class="org">AppWorks School<small>Taipei, Taiwan</small></p>
+            <div class="tags"><span class="tag">FastAPI</span><span class="tag">MySQL</span><span class="tag">JWT</span></div>
+          </div>
+          <div class="detail">
+            <ul><li>Completed full-stack training and built a travel booking web app with FastAPI, MySQL, JWT authentication and payment integration.</li></ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-      <section id="projects" data-label="Projects">
-        <h2 class="sec-label">Projects</h2>
-        <div class="rows">
-          <article class="row">
-            <div class="fig"><div><b>21</b><span>rooms</span></div><div><b>3</b><span>cities</span></div></div>
-            <div>
-              <h3>Meeting Room Booking System</h3>
-              <p class="why">One booking system for every meeting room in the company, with no double bookings.</p>
-              <ul>
-                <li>Customised for rooms in Taipei, Shenzhen and Shanghai, with AD sign-in and instant LINE / WeCom notifications.</li>
-                <li>Runs on an Ubuntu VM with Docker, Caddy as reverse proxy and HTTPS from the internal CA.</li>
-                <li>Fixed double bookings and duplicate submissions with resource locking, version checks and idempotency keys, proved it with concurrent booking tests, and set up daily backups with tested restores.</li>
-              </ul>
-              <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">JavaScript</span><span class="tag">Docker</span><span class="tag">Caddy</span><span class="tag">LINE / WeCom API</span></div>
-            </div>
-          </article>
-          <article class="row">
-            <div class="fig"><div><b>2</b><span>client apps</span></div><div><b>1</b><span>relay in Shenzhen</span></div></div>
-            <div>
-              <h3>Remote Support Platform</h3>
-              <p class="why">Replaced AnyDesk with a self-hosted RustDesk setup the company controls.</p>
-              <ul>
-                <li>Ran the RustDesk server on VMware behind FortiGate rules for remote access.</li>
-                <li>Deployed a relay server in Shenzhen so users in China get reliable sessions.</li>
-                <li>Split the Flutter client into a user app and an IT controller app, with AD sign-in and group-based access so only authorised IT staff can start a session.</li>
-              </ul>
-              <div class="tags"><span class="tag">RustDesk</span><span class="tag">Flutter / Dart</span><span class="tag">VMware</span><span class="tag">AD</span><span class="tag">FortiGate</span></div>
-            </div>
-          </article>
-          <article class="row">
-            <div class="fig"><div><b>2</b><span>event locations</span></div></div>
-            <div>
-              <h3>Lucky Draw System</h3>
-              <p class="why">A full-stack draw app run live on stage at company events in Taiwan and Shenzhen.</p>
-              <ul>
-                <li>Multi-stage draws and eligibility rules based on seniority.</li>
-                <li>Server-side protection against anyone winning twice, and redraws that refresh data before each round.</li>
-              </ul>
-              <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">Flask</span><span class="tag">MySQL</span></div>
-            </div>
-          </article>
-        </div>
-
-        <div class="earlier">
-          <h3>Earlier web projects</h3>
+  <section class="block" id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="t"><span class="eyebrow">Projects</span><h2>Tools I built for the office</h2></div>
+        <p class="note">Each one started as a real problem at work, and I took it from idea to deployment.</p>
+      </div>
+      <div class="projects">
+        <article class="proj">
+          <div class="fig"><div><b>21</b><span>rooms</span></div><div><b>3</b><span>cities</span></div></div>
+          <h3>Meeting Room Booking System</h3>
+          <p class="why">One booking system for every meeting room in the company, with no double bookings.</p>
           <ul>
-            <li><a href="https://github.com/Shawn0604/Taipei-Day-Trip" target="_blank" rel="noopener"><span class="nm">Taipei Day Trip</span><span class="ds">Browse Taipei attractions and book a day trip, with third-party payment.</span><span class="go">↗</span></a></li>
-            <li><a href="https://github.com/Shawn0604/MoodBlog-website" target="_blank" rel="noopener"><span class="nm">MoodBlog</span><span class="ds">A journaling site where AI replies help you reflect on how you feel.</span><span class="go">↗</span></a></li>
-            <li><a href="https://github.com/Shawn0604/team-weather/tree/master" target="_blank" rel="noopener"><span class="nm">Weather Website</span><span class="ds">Real-time 36-hour forecasts with chat and a Discord integration.</span><span class="go">↗</span></a></li>
+            <li>Rooms in Taipei, Shenzhen and Shanghai, with AD sign-in and instant LINE / WeCom notifications.</li>
+            <li>Docker on Ubuntu, Caddy reverse proxy, HTTPS from the internal CA.</li>
+            <li>Resource locking, version checks and idempotency keys to stop double bookings, proved with concurrent tests. Daily backups with tested restores.</li>
           </ul>
-        </div>
-      </section>
+          <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">JavaScript</span><span class="tag">Docker</span><span class="tag">Caddy</span><span class="tag">LINE / WeCom</span></div>
+        </article>
+        <article class="proj">
+          <div class="fig"><div><b>2</b><span>client apps</span></div><div><b>1</b><span>China relay</span></div></div>
+          <h3>Remote Support Platform</h3>
+          <p class="why">Replaced AnyDesk with a self-hosted RustDesk setup the company controls.</p>
+          <ul>
+            <li>RustDesk server on VMware behind FortiGate rules for remote access.</li>
+            <li>A relay server in Shenzhen so users in China get reliable sessions.</li>
+            <li>Flutter client split into a user app and an IT controller app, with AD sign-in and group-based access for IT staff only.</li>
+          </ul>
+          <div class="tags"><span class="tag">RustDesk</span><span class="tag">Flutter</span><span class="tag">VMware</span><span class="tag">AD</span><span class="tag">FortiGate</span></div>
+        </article>
+        <article class="proj">
+          <div class="fig"><div><b>2</b><span>event locations</span></div></div>
+          <h3>Lucky Draw System</h3>
+          <p class="why">A full-stack draw app run live on stage at company events in Taiwan and Shenzhen.</p>
+          <ul>
+            <li>Multi-stage draws with eligibility rules based on seniority.</li>
+            <li>Server-side protection against anyone winning twice.</li>
+            <li>Redraw support, with a data refresh before each round.</li>
+          </ul>
+          <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">Flask</span><span class="tag">MySQL</span></div>
+        </article>
+      </div>
 
-      <section id="skills" data-label="Skills">
-        <h2 class="sec-label">Skills</h2>
-        <div class="rack">
-          <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U1</div><div class="in"><h3>Systems &amp; Infrastructure</h3><div class="tags"><span class="tag">Windows Server</span><span class="tag">Active Directory / GPO</span><span class="tag">VMware vSphere (HA)</span><span class="tag">Linux (Ubuntu)</span><span class="tag">Synology NAS</span><span class="tag">IP PBX</span><span class="tag">Postfix</span></div></div></div>
-          <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U2</div><div class="in"><h3>Networking &amp; Security</h3><div class="tags"><span class="tag">FortiGate</span><span class="tag">SSL-VPN</span><span class="tag">IPsec</span><span class="tag">Cloudflare DNS</span><span class="tag">Nessus</span><span class="tag">Endpoint Security</span><span class="tag">ISO 27001</span></div></div></div>
-          <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U3</div><div class="in"><h3>Cloud &amp; Collaboration</h3><div class="tags"><span class="tag">Google Workspace admin</span><span class="tag">AWS EC2</span><span class="tag">NAVER WORKS</span></div></div></div>
-          <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U4</div><div class="in"><h3>Programming &amp; Development</h3><div class="tags"><span class="tag">Python (Flask, FastAPI)</span><span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Docker</span><span class="tag">Caddy</span><span class="tag">Git</span></div></div></div>
-        </div>
-        <div class="langs">
-          <div><b>Mandarin</b><span>Native</span></div>
-          <div><b>English</b><span>Professional working proficiency</span></div>
-        </div>
-      </section>
+      <div class="earlier">
+        <h3>Earlier web projects<small>From AppWorks School and side projects</small></h3>
+        <ul>
+          <li><a href="https://github.com/Shawn0604/Taipei-Day-Trip" target="_blank" rel="noopener"><span class="nm">Taipei Day Trip<span>↗</span></span><span class="ds">Browse Taipei attractions and book a day trip, with third-party payment.</span></a></li>
+          <li><a href="https://github.com/Shawn0604/MoodBlog-website" target="_blank" rel="noopener"><span class="nm">MoodBlog<span>↗</span></span><span class="ds">A journaling site where AI replies help you reflect on how you feel.</span></a></li>
+          <li><a href="https://github.com/Shawn0604/team-weather/tree/master" target="_blank" rel="noopener"><span class="nm">Weather Website<span>↗</span></span><span class="ds">Real-time 36-hour forecasts with chat and a Discord integration.</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-      <section id="education" data-label="Education">
-        <h2 class="sec-label">Education</h2>
-        <div class="rows">
-          <article class="row next">
-            <div class="when">From Feb 2027</div>
-            <div>
-              <h3>Master of Information Technology <span class="at">· RMIT University</span></h3>
-              <p class="loc">Melbourne, Australia</p>
-            </div>
-          </article>
-          <article class="row">
-            <div class="when">2020 – 2024</div>
-            <div>
-              <h3>B.S. in Mathematics <span class="at">· National Taiwan Normal University</span></h3>
-              <p class="loc">Taipei, Taiwan · plus the Educational Big Data Program</p>
-            </div>
-          </article>
-        </div>
-      </section>
+  <section class="block" id="skills">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="t"><span class="eyebrow">Skills</span><h2>What's in the rack</h2></div>
+      </div>
+      <div class="rack">
+        <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U1</div><div class="in"><h3>Systems &amp; Infrastructure</h3><div class="tags"><span class="tag">Windows Server</span><span class="tag">Active Directory / GPO</span><span class="tag">VMware vSphere (HA)</span><span class="tag">Linux (Ubuntu)</span><span class="tag">Synology NAS</span><span class="tag">IP PBX</span><span class="tag">Postfix</span></div></div></div>
+        <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U2</div><div class="in"><h3>Networking &amp; Security</h3><div class="tags"><span class="tag">FortiGate</span><span class="tag">SSL-VPN</span><span class="tag">IPsec</span><span class="tag">Cloudflare DNS</span><span class="tag">Nessus</span><span class="tag">Endpoint Security</span><span class="tag">ISO 27001</span></div></div></div>
+        <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U3</div><div class="in"><h3>Cloud &amp; Collaboration</h3><div class="tags"><span class="tag">Google Workspace admin</span><span class="tag">AWS EC2</span><span class="tag">NAVER WORKS</span></div></div></div>
+        <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U4</div><div class="in"><h3>Programming &amp; Development</h3><div class="tags"><span class="tag">Python (Flask, FastAPI)</span><span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Docker</span><span class="tag">Caddy</span><span class="tag">Git</span></div></div></div>
+      </div>
+      <div class="langs">
+        <div><b>Mandarin</b><span>Native</span></div>
+        <div><b>English</b><span>Professional working proficiency</span></div>
+      </div>
+    </div>
+  </section>
 
-      <section class="contact" id="contact" data-label="Contact">
-        <h2 class="sec-label">Contact</h2>
+  <section class="block" id="education">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="t"><span class="eyebrow">Education</span><h2>Study</h2></div>
+      </div>
+      <div class="edu">
+        <div class="school next">
+          <span class="when">From Feb 2027 · Melbourne, Australia</span>
+          <h3>RMIT University</h3>
+          <p>Master of Information Technology</p>
+        </div>
+        <div class="school">
+          <span class="when">Sep 2020 – Jun 2024 · Taipei, Taiwan</span>
+          <h3>National Taiwan Normal University</h3>
+          <p>B.S. in Mathematics, plus the Educational Big Data Program</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block contact" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <span class="eyebrow">Contact</span>
         <h2>Let's talk.</h2>
         <p>I'm moving to Melbourne for 2027. Email is the fastest way to reach me, whether it's an IT role, a project or a question about something on this page.</p>
-        <div class="mailrow">
-          <a class="mail" id="mail" href="mailto:shawn901011@gmail.com">shawn901011@gmail.com</a>
+      </div>
+      <div>
+        <a class="mail" id="mail" href="mailto:shawn901011@gmail.com">shawn901011@gmail.com</a>
+        <div class="mail-actions">
           <button class="btn" id="copy" type="button">Copy email</button>
+          <a class="btn" href="https://github.com/Shawn0604" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn" href="https://www.linkedin.com/in/%E5%B0%9A%E5%B3%B0-%E8%94%A1-341a1b236/" target="_blank" rel="noopener">LinkedIn ↗</a>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
+</main>
 
-      <footer class="foot">
-        © 2026 Shawn Tsai. Hand-built and served from GitHub Pages.<br>
-        Cats by The Cat API, watched over on CAM-01.
-      </footer>
-    </main>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Shawn Tsai · served from GitHub Pages</span>
+    <span>Cats by The Cat API</span>
   </div>
-</div>
+</footer>
 
 <script>
 (function () {
@@ -550,21 +557,20 @@ ul { margin: 0; padding: 0; list-style: none; }
   });
 })();
 
-/* scroll spy: highlights the nav and tells the cat cam what you're looking at */
+/* top bar: border once scrolled, and the active section in the nav */
 (function () {
-  var links = document.querySelectorAll('.spy a');
-  var watch = document.getElementById('cam-watch');
-  var sections = document.querySelectorAll('.content > section');
+  var bar = document.getElementById('topbar');
+  var onScroll = function () { bar.classList.toggle('scrolled', window.scrollY > 8); };
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   if (!('IntersectionObserver' in window)) return;
+  var links = document.querySelectorAll('.nav a');
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!e.isIntersecting) return;
-      var id = e.target.id;
-      links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-for') === id); });
-      watch.textContent = e.target.getAttribute('data-label');
+      links.forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-for') === e.target.id); });
     });
   }, { rootMargin: '-40% 0px -55% 0px' });
-  sections.forEach(function (s) { io.observe(s); });
+  document.querySelectorAll('main > section[id]').forEach(function (s) { io.observe(s); });
 })();
 
 /* CAM-01: random cats from The Cat API, with a burst of static between channels */
