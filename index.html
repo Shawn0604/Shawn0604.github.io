@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Shawn Tsai</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="favicon.svg"http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="%2310171E"/><path d="M7 26V13l3.6-6.2 3.6 4.7h3.6l3.6-4.7L25 13v13a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 7 26z" fill="%23F2B441"/><rect x="10.6" y="16.4" width="3.2" height="3.2" rx="1.2" fill="%2310171E"/><rect x="18.2" y="16.4" width="3.2" height="3.2" rx="1.2" fill="%2310171E"/><circle cx="26.5" cy="5.5" r="2.5" fill="%23E5484D"/></svg>">
 <meta name="theme-color" content="#10171E">
 <meta name="description" content="Shawn Tsai: IT engineer from Taipei, starting a Master of IT at RMIT Melbourne in 2027.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&text=%E8%94%A1%E5%B0%9A%E5%B3%B0&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&text=%E8%94%A1%E5%B0%9A%E5%B3%B0%E7%AA%81%E9%9B%85&display=swap">
 <style>
 /* Layout: desktop-first 12-column page, 1200px wide. Hero pairs the name with the office cat cam;
    every section opens with the same head, then uses the full width (table-like rows, 3-up cards, 2x2 rack). */
@@ -219,6 +219,34 @@ ul { margin: 0; padding: 0; list-style: none; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
 .tag { font-family: var(--f-mono); font-size: 12px; padding: 3px 10px; border-radius: 999px; color: var(--muted); background: color-mix(in srgb, var(--ink) 6%, transparent); }
 
+/* featured project: the one in progress */
+.feature { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 40px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 40px; margin-bottom: 24px; }
+.feature-text { grid-column: 1 / span 6; }
+.feature-shot { grid-column: 7 / span 6; display: block; text-decoration: none; }
+@media (max-width: 1080px) { .feature { grid-template-columns: minmax(0, 1fr); gap: 32px; padding: 28px; } .feature-text, .feature-shot { grid-column: 1; } }
+@media (max-width: 700px) { .feature { padding: 22px; } }
+.feature-top { display: flex; align-items: center; gap: 14px; }
+.feature-top img { width: 48px; height: 48px; border-radius: 12px; box-shadow: 0 0 0 1px var(--line); }
+.live { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--amber); padding: 5px 12px 5px 10px; border-radius: 999px; background: color-mix(in srgb, var(--amber) 12%, transparent); }
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); animation: pulse 1.8s ease-out infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--amber) 55%, transparent); } 100% { box-shadow: 0 0 0 9px transparent; } }
+.feature h3 { margin-top: 22px; font-family: var(--f-display); font-stretch: 118%; font-weight: 850; font-size: clamp(2.2rem, 3.6vw, 3rem); line-height: 1; letter-spacing: -.02em; }
+.feature h3 span { font-family: var(--f-tc); font-stretch: 100%; font-weight: 700; font-size: .55em; letter-spacing: .08em; color: var(--muted); margin-left: .35em; }
+.feature .sub { margin-top: 12px; font-size: 1.12rem; line-height: 1.5; }
+.feature .fig { margin-top: 26px; }
+@media (max-width: 420px) { .feature .fig { gap: 20px; } .feature .fig b { font-size: 2.1rem; } }
+.feature ul { display: grid; gap: 10px; color: var(--muted); font-size: 15.5px; }
+.feature li { position: relative; padding-left: 20px; }
+.feature li::before { content: "→"; position: absolute; left: 0; top: .05em; color: var(--cable); font-family: var(--f-mono); font-size: 13px; }
+.feature .tags { margin-top: 20px; }
+.feature .go { margin-top: 26px; }
+.browser { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--panel); box-shadow: 0 30px 60px -34px color-mix(in srgb, #000 45%, transparent); transition: transform .25s, box-shadow .25s; }
+.feature-shot:hover .browser { transform: translateY(-4px); box-shadow: 0 36px 70px -34px color-mix(in srgb, #000 50%, transparent); }
+.browser .bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: color-mix(in srgb, var(--ink) 4%, var(--panel)); border-bottom: 1px solid var(--line); font-family: var(--f-mono); font-size: 12px; color: var(--faint); }
+.browser .bar i { width: 9px; height: 9px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 15%, transparent); }
+.browser .bar span { margin-left: 10px; padding: 2px 12px; border-radius: 6px; background: var(--paper); }
+.browser img { display: block; width: 100%; height: auto; aspect-ratio: 800 / 506; max-width: 100%; }
+
 /* projects: 3-up cards */
 .projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 @media (max-width: 1080px) { .projects { grid-template-columns: minmax(0, 1fr); } }
@@ -286,7 +314,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .caret, .rec { animation: none; }
-  .cam-body, .catcam:hover .cam-body, .proj:hover { transform: none; transition: none; }
+  .cam-body, .catcam:hover .cam-body, .proj:hover, .feature-shot:hover .browser { transform: none; transition: none; }
+  .pulse { animation: none; }
 }
 </style>
 </head>
@@ -359,7 +388,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <div class="about-text">
           <p>I'm an IT engineer from Taipei. At <strong>CoAsia Electronics</strong> I looked after the network, servers and people in our Taipei office, and supported colleagues remotely in five other countries.</p>
           <p>I studied <strong>mathematics</strong> at National Taiwan Normal University and trained as a <strong>full-stack developer</strong> at AppWorks School. So when a problem at work needed a tool, I usually built it.</p>
-          <p>In February 2027 I start a <strong>Master of Information Technology at RMIT University</strong> in Melbourne.</p>
+          <p>Right now I'm building <strong>TUYA</strong>, an IELTS learning site. In February 2027 I start a <strong>Master of Information Technology at RMIT University</strong> in Melbourne.</p>
         </div>
         <div class="term" role="img" aria-label="Career path as a traceroute: NTNU mathematics 2020 to 2024, AppWorks School 2023, NTNU research assistant 2023 to 2024, CoAsia Electronics IT engineer 2025 to 2026, next hop RMIT University Melbourne 2027.">
           <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>shawn@taipei: ~</span></div>
@@ -430,9 +459,34 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   <section class="block" id="projects">
     <div class="wrap">
       <div class="sec-head">
-        <div class="t"><span class="eyebrow">Projects</span><h2>Tools I built for the office</h2></div>
-        <p class="note">Each one started as a real problem at work, and I took it from idea to deployment.</p>
+        <div class="t"><span class="eyebrow">Projects</span><h2>Things I've built</h2></div>
+        <p class="note">An IELTS learning site I'm building now, and tools that started as real problems at work.</p>
       </div>
+      <article class="feature">
+        <div class="feature-text">
+          <div class="feature-top">
+            <img src="images/tuya-icon.png" alt="" width="48" height="48">
+            <span class="live"><span class="pulse" aria-hidden="true"></span>In progress · Live</span>
+          </div>
+          <h3>TUYA<span lang="zh-Hant">突雅</span></h3>
+          <p class="sub">An IELTS learning site for Taiwanese test takers: learn one technique in two minutes, on your commute.</p>
+          <div class="fig"><div><b>21</b><span>technique games</span></div><div><b>4</b><span>IELTS skills</span></div><div><b>4,405</b><span>voice clips</span></div></div>
+          <ul>
+            <li>One-to-three-minute games that teach listening, reading, writing and speaking techniques, with mistakes queued for spaced review.</li>
+            <li>Next.js 16 on Cloudflare Workers (OpenNext) and Supabase, with Google / email sign-in, cloud sync and an admin dashboard.</li>
+            <li>Every clip pre-recorded with the open-source Kokoro model in British and American voices, spot-checked with speech recognition.</li>
+          </ul>
+          <div class="tags"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Cloudflare Workers</span><span class="tag">Supabase</span><span class="tag">Kokoro TTS</span></div>
+          <a class="btn solid go" href="https://tuyaielts.com" target="_blank" rel="noopener">Visit tuyaielts.com ↗</a>
+        </div>
+        <a class="feature-shot" href="https://tuyaielts.com" target="_blank" rel="noopener" aria-label="Open tuyaielts.com">
+          <div class="browser">
+            <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>tuyaielts.com</span></div>
+            <img src="images/tuya-home.jpg" alt="TUYA home page showing today's three IELTS technique games" width="800" height="506" loading="lazy">
+          </div>
+        </a>
+      </article>
+
       <div class="projects">
         <article class="proj">
           <div class="fig"><div><b>21</b><span>rooms</span></div><div><b>3</b><span>cities</span></div></div>
