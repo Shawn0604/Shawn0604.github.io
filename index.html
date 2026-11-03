@@ -125,9 +125,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 .cam-body {
   background: var(--term-bg); border-radius: 18px; padding: 12px;
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 10%, transparent), 0 40px 80px -40px color-mix(in srgb, #000 65%, transparent);
-  transform: rotate(1.5deg); transition: transform .4s cubic-bezier(.2,.8,.2,1);
+  transition: transform .4s cubic-bezier(.2,.8,.2,1);
 }
-.catcam:hover .cam-body { transform: rotate(0deg) translateY(-2px); }
+.catcam:hover .cam-body { transform: translateY(-2px); }
 .cam-screen { position: relative; aspect-ratio: 4 / 3; max-width: 100%; overflow: hidden; border-radius: 9px; background: #1A232B; display: grid; place-items: center; isolation: isolate; }
 .cam-screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.72) contrast(1.08) brightness(.95); transition: filter .4s; }
 .catcam:hover .cam-screen img { filter: none; }
