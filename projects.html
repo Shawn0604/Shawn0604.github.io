@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>All Projects · Shawn Tsai</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#10171E">
+<meta name="description" content="Every project Shawn Tsai has built: internal tools at work, side projects, AI research and earlier web work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&text=%E7%AA%81%E9%9B%85%E6%8F%AA%E5%8F%8B%E6%97%A9%E4%B8%8A%E4%BA%94%E5%88%86%E9%90%98&display=swap">
+<style>
+/* Same tokens and type as index.html, so the two pages read as one site. */
+:root {
+  --paper: #EEF1F3; --panel: #FFFFFF; --ink: #0F1720; --muted: #55616C; --faint: #86929D; --line: #D3DAE0;
+  --cable: #1D5BC9; --amber: #A86400; --led: #1B9255; --rec: #E5484D; --violet: #6E56CF;
+  --f-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --f-tc: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0D1318; --panel: #141C23; --ink: #E5EAEE; --muted: #9DA9B4; --faint: #6C7985; --line: #25313B;
+    --cable: #78AAFF; --amber: #F2B441; --led: #3FD48B; --rec: #FF6369; --violet: #A594F9;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0D1318; --panel: #141C23; --ink: #E5EAEE; --muted: #9DA9B4; --faint: #6C7985; --line: #25313B;
+  --cable: #78AAFF; --amber: #F2B441; --led: #3FD48B; --rec: #FF6369; --violet: #A594F9;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+@media (max-width: 700px) { body { font-size: 16px; } }
+a { color: var(--cable); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--cable); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+.wrap { max-width: 1264px; margin: 0 auto; padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); }
+@media (max-width: 700px) { .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); } }
+
+/* top bar */
+.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+.top.scrolled { border-bottom-color: var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 32px; height: 64px; }
+.brand { font-family: var(--f-mono); font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none; margin-right: auto; display: inline-flex; align-items: center; gap: 10px; }
+.brand i { font-style: normal; color: var(--faint); font-weight: 400; }
+.nav { display: flex; gap: 4px; }
+.nav a { font-size: 15px; font-weight: 500; color: var(--muted); text-decoration: none; padding: 8px 12px; border-radius: 8px; }
+.nav a:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+@media (max-width: 900px) { .nav { display: none; } }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-body); font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 999px; text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--panel); }
+.btn:hover { border-color: var(--ink); }
+.led { width: 8px; height: 8px; border-radius: 50%; background: var(--led); box-shadow: 0 0 0 3px color-mix(in srgb, var(--led) 22%, transparent); flex: none; }
+
+/* page head */
+.head .wrap { padding-block: 64px 40px; }
+.eyebrow { display: block; font-family: var(--f-mono); font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--cable); margin-bottom: 12px; }
+.head h1 { font-family: var(--f-display); font-stretch: 120%; font-weight: 850; font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: .95; letter-spacing: -.025em; }
+.head .lede { margin-top: 20px; max-width: 36em; color: var(--muted); font-size: clamp(1.05rem, 1.4vw, 1.2rem); }
+.stats { display: flex; flex-wrap: wrap; gap: 16px 48px; margin-top: 36px; }
+.stats div { display: flex; flex-direction: column; }
+.stats b { font-family: var(--f-display); font-stretch: 115%; font-weight: 850; font-size: 2.4rem; line-height: 1; color: var(--cable); font-variant-numeric: tabular-nums; }
+.stats span { margin-top: 6px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--faint); }
+
+/* filter chips */
+.filters { position: sticky; top: 64px; z-index: 5; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(10px); border-block: 1px solid var(--line); }
+.filters .wrap { display: flex; gap: 8px; padding-block: 12px; overflow-x: auto; scrollbar-width: none; }
+.chip { flex: none; display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 13px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); cursor: pointer; }
+.chip:hover { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 40%, var(--line)); }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.chip .n { opacity: .6; font-variant-numeric: tabular-nums; }
+
+/* groups */
+.group { border-bottom: 1px solid var(--line); }
+.group > .wrap { padding-block: 64px; }
+.g-head { display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 22em); gap: 8px 24px; align-items: end; margin-bottom: 32px; }
+.g-head .u { align-self: stretch; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); font-family: var(--f-mono); font-size: 12px; color: var(--faint); min-height: 64px; }
+.g-head .u .led { width: 6px; height: 6px; box-shadow: none; }
+.g-head h2 { font-family: var(--f-display); font-stretch: 112%; font-weight: 800; font-size: clamp(1.7rem, 3vw, 2.3rem); line-height: 1.05; letter-spacing: -.015em; }
+.g-head p { color: var(--muted); font-size: 15.5px; }
+@media (max-width: 800px) { .g-head { grid-template-columns: 52px minmax(0, 1fr); } .g-head p { grid-column: 1 / -1; } }
+
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 1080px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .cards { grid-template-columns: minmax(0, 1fr); } }
+.card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; transition: border-color .2s, transform .2s, box-shadow .2s; }
+.card:hover { border-color: color-mix(in srgb, var(--cable) 45%, var(--line)); transform: translateY(-3px); box-shadow: 0 24px 48px -32px color-mix(in srgb, #000 45%, transparent); }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.yr { font-family: var(--f-mono); font-size: 12.5px; color: var(--faint); font-variant-numeric: tabular-nums; }
+.st { display: inline-flex; align-items: center; gap: 7px; font-family: var(--f-mono); font-size: 11.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; padding: 4px 10px 4px 9px; border-radius: 999px; --c: var(--faint); color: var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
+.st::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.st.live { --c: var(--amber); }
+.st.in-use { --c: var(--led); }
+.st.prototype { --c: var(--cable); }
+.st.research { --c: var(--violet); }
+.card h3 { margin-top: 18px; font-family: var(--f-display); font-stretch: 105%; font-weight: 800; font-size: 1.25rem; line-height: 1.2; }
+.card h3 .tc { font-family: var(--f-tc); font-weight: 700; font-size: .82em; color: var(--muted); margin-left: .3em; letter-spacing: .04em; }
+.card .blurb { margin-top: 8px; color: var(--muted); font-size: 15.5px; line-height: 1.55; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.tag { font-family: var(--f-mono); font-size: 12px; padding: 3px 10px; border-radius: 999px; color: var(--muted); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.card-foot { margin-top: auto; padding-top: 20px; }
+.links { display: flex; flex-wrap: wrap; gap: 8px 16px; padding-top: 16px; border-top: 1px dashed var(--line); font-family: var(--f-mono); font-size: 13px; }
+.links a { color: var(--cable); text-decoration: none; font-weight: 500; }
+.links a:hover { text-decoration: underline; }
+.links .lock { color: var(--faint); display: inline-flex; align-items: center; gap: 6px; }
+.links .lock svg { width: 12px; height: 12px; fill: currentColor; }
+.repos { margin-top: 10px; font-family: var(--f-mono); font-size: 11.5px; color: var(--faint); overflow-wrap: anywhere; }
+.empty { color: var(--muted); font-family: var(--f-mono); font-size: 14px; }
+
+/* practice list */
+.practice { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 1080px) { .practice { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .practice { grid-template-columns: minmax(0, 1fr); } }
+.practice li { padding: 16px 18px; border-radius: 12px; border: 1px dashed var(--line); }
+.practice b { display: block; font-weight: 600; }
+.practice b a { color: inherit; text-decoration: none; }
+.practice b a:hover { color: var(--cable); }
+.practice span { color: var(--muted); font-size: 14px; }
+
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px 40px; font-family: var(--f-mono); font-size: 12.5px; color: var(--faint); }
+footer a { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .card, .card:hover { transform: none; transition: none; } }
+</style>
+</head>
+<body>
+<header class="top" id="topbar">
+  <div class="wrap">
+    <a class="brand" href="./"><span class="led" aria-hidden="true"></span><span>shawn<i>.tsai</i></span></a>
+    <nav class="nav" aria-label="Project groups" id="group-nav"></nav>
+    <a class="btn" href="./#projects">← Back to home</a>
+  </div>
+</header>
+
+<main>
+  <section class="head">
+    <div class="wrap">
+      <span class="eyebrow">Projects · full index</span>
+      <h1>Everything I've built</h1>
+      <p class="lede">The highlights are on the <a href="./#projects">home page</a>. This is the full list, grouped by where each project came from. Most work projects live in private repos, so they have no code link.</p>
+      <div class="stats" id="stats"></div>
+    </div>
+  </section>
+
+  <div class="filters" role="toolbar" aria-label="Filter by status">
+    <div class="wrap" id="filters"></div>
+  </div>
+
+  <div id="groups">
+    <noscript><div class="wrap" style="padding-block:48px"><p class="empty">This list needs JavaScript. All public repos are at <a href="https://github.com/Shawn0604?tab=repositories">github.com/Shawn0604</a>.</p></div></noscript>
+  </div>
+
+  <section class="group" id="practice-sec">
+    <div class="wrap">
+      <div class="g-head">
+        <div class="u"><span class="led" aria-hidden="true"></span>U5</div>
+        <h2>Practice</h2>
+        <p>Exercises and course work, kept for the record.</p>
+      </div>
+      <ul class="practice" id="practice"></ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Shawn Tsai · served from GitHub Pages</span>
+    <a href="https://github.com/Shawn0604" target="_blank" rel="noopener">github.com/Shawn0604 ↗</a>
+  </div>
+</footer>
+
+<script src="data/projects.js"></script>
+<script>
+(function () {
+  var GROUPS = window.PROJECT_GROUPS || [];
+  var PRACTICE = window.PRACTICE || [];
+  var STATUS = [
+    { id: 'all', label: 'All' },
+    { id: 'live', label: 'Live' },
+    { id: 'in-use', label: 'In use' },
+    { id: 'prototype', label: 'Prototype' },
+    { id: 'research', label: 'Research' },
+    { id: 'archived', label: 'Archived' }
+  ];
+  var LABEL = {}; STATUS.forEach(function (s) { LABEL[s.id] = s.label; });
+  var LOCK = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h.5A1.5 1.5 0 0 1 14 8.5v5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5v-5A1.5 1.5 0 0 1 3.5 7H4zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg>';
+
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  /* "TUYA 突雅" -> Latin name plus a smaller Chinese name */
+  function title(name) {
+    var m = name.match(/^(.*?)\s+([㐀-鿿].*)$/);
+    return m ? esc(m[1]) + '<span class="tc" lang="zh-Hant">' + esc(m[2]) + '</span>' : esc(name);
+  }
+
+  var all = [];
+  GROUPS.forEach(function (g) { g.projects.forEach(function (p) { all.push(p); }); });
+  var repoCount = 0;
+  all.forEach(function (p) { repoCount += (p.repos || []).length; });
+  repoCount += PRACTICE.length;
+
+  document.getElementById('stats').innerHTML =
+    '<div><b>' + all.length + '</b><span>projects</span></div>' +
+    '<div><b>' + all.filter(function (p) { return p.status === 'live' || p.status === 'in-use'; }).length + '</b><span>live or in use</span></div>' +
+    '<div><b>' + repoCount + '</b><span>repos behind them</span></div>';
+
+  document.getElementById('group-nav').innerHTML = GROUPS.map(function (g) {
+    return '<a href="#' + esc(g.id) + '">' + esc(g.title) + '</a>';
+  }).join('');
+
+  function card(p) {
+    var links = [];
+    if (p.links && p.links.live) links.push('<a href="' + esc(p.links.live) + '" target="_blank" rel="noopener">Visit ↗</a>');
+    if (p.links && p.links.code) links.push('<a href="' + esc(p.links.code) + '" target="_blank" rel="noopener">Code ↗</a>');
+    if (!(p.links && p.links.code)) links.push('<span class="lock">' + LOCK + 'Private repo</span>');
+    return '<article class="card" data-status="' + esc(p.status) + '">' +
+      '<div class="card-top"><span class="st ' + esc(p.status) + '">' + esc(LABEL[p.status] || p.status) + '</span><span class="yr">' + esc(p.year) + '</span></div>' +
+      '<h3>' + title(p.name) + '</h3>' +
+      '<p class="blurb">' + esc(p.blurb) + '</p>' +
+      '<div class="tags">' + (p.tags || []).map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
+      '<div class="card-foot"><div class="links">' + links.join('') + '</div>' +
+      ((p.repos || []).length > 1 ? '<p class="repos">Merges ' + p.repos.length + ' repos: ' + p.repos.map(esc).join(' · ') + '</p>' : '') +
+      '</div></article>';
+  }
+
+  document.getElementById('groups').innerHTML = GROUPS.map(function (g) {
+    return '<section class="group" id="' + esc(g.id) + '"><div class="wrap">' +
+      '<div class="g-head"><div class="u"><span class="led" aria-hidden="true"></span>' + esc(g.unit) + '</div>' +
+      '<h2>' + esc(g.title) + '</h2><p>' + esc(g.note) + '</p></div>' +
+      '<div class="cards">' + g.projects.map(card).join('') + '</div>' +
+      '</div></section>';
+  }).join('');
+
+  document.getElementById('practice').innerHTML = PRACTICE.map(function (r) {
+    var nm = r.url ? '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.name) + ' ↗</a>' : esc(r.name);
+    return '<li><b>' + nm + '</b><span>' + esc(r.note) + '</span></li>';
+  }).join('');
+
+  /* status filter */
+  var bar = document.getElementById('filters');
+  bar.innerHTML = STATUS.map(function (s) {
+    var n = s.id === 'all' ? all.length : all.filter(function (p) { return p.status === s.id; }).length;
+    return '<button type="button" class="chip" data-f="' + s.id + '" aria-pressed="' + (s.id === 'all') + '">' + s.label + ' <span class="n">' + n + '</span></button>';
+  }).join('');
+  bar.addEventListener('click', function (e) {
+    var b = e.target.closest('.chip'); if (!b) return;
+    var f = b.getAttribute('data-f');
+    bar.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', c === b); });
+    document.querySelectorAll('#groups .group').forEach(function (sec) {
+      var shown = 0;
+      sec.querySelectorAll('.card').forEach(function (c) {
+        var ok = f === 'all' || c.getAttribute('data-status') === f;
+        c.hidden = !ok; if (ok) shown++;
+      });
+      sec.hidden = shown === 0;
+    });
+    document.getElementById('practice-sec').hidden = f !== 'all' && f !== 'archived';
+  });
+
+  var top = document.getElementById('topbar');
+  var onScroll = function () { top.classList.toggle('scrolled', window.scrollY > 8); };
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+})();
+</script>
+</body>
+</html>

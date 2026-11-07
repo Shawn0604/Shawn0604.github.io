@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Shawn Tsai</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="icon" type="image/svg+xml" href="favicon.svg"http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="%2310171E"/><path d="M7 26V13l3.6-6.2 3.6 4.7h3.6l3.6-4.7L25 13v13a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 7 26z" fill="%23F2B441"/><rect x="10.6" y="16.4" width="3.2" height="3.2" rx="1.2" fill="%2310171E"/><rect x="18.2" y="16.4" width="3.2" height="3.2" rx="1.2" fill="%2310171E"/><circle cx="26.5" cy="5.5" r="2.5" fill="%23E5484D"/></svg>">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta name="theme-color" content="#10171E">
 <meta name="description" content="Shawn Tsai: IT engineer from Taipei, starting a Master of IT at RMIT Melbourne in 2027.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -275,6 +275,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 .earlier .ds { color: var(--muted); font-size: 14.5px; line-height: 1.5; }
 @media (max-width: 1080px) { .earlier { grid-template-columns: minmax(0, 1fr); gap: 16px; } .earlier h3, .earlier ul { grid-column: 1; } }
 @media (max-width: 760px) { .earlier ul { grid-template-columns: minmax(0, 1fr); } }
+.all-projects { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding: 24px 28px; border-radius: 16px; border: 1px dashed var(--line); }
+.all-projects p { color: var(--muted); }
 
 /* skills: 2x2 rack */
 .rack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
@@ -327,6 +329,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <a href="#about" data-for="about">About</a>
       <a href="#experience" data-for="experience">Experience</a>
       <a href="#projects" data-for="projects">Projects</a>
+      <a href="projects.html">All projects</a>
       <a href="#skills" data-for="skills">Skills</a>
       <a href="#education" data-for="education">Education</a>
     </nav>
@@ -530,6 +533,11 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
           <li><a href="https://github.com/Shawn0604/MoodBlog-website" target="_blank" rel="noopener"><span class="nm">MoodBlog<span>↗</span></span><span class="ds">A journaling site where AI replies help you reflect on how you feel.</span></a></li>
           <li><a href="https://github.com/Shawn0604/team-weather/tree/master" target="_blank" rel="noopener"><span class="nm">Weather Website<span>↗</span></span><span class="ds">Real-time 36-hour forecasts with chat and a Discord integration.</span></a></li>
         </ul>
+      </div>
+
+      <div class="all-projects">
+        <p>These are the highlights. The full index has every project, including AI tools and research.</p>
+        <a class="btn solid" href="projects.html">See all projects →</a>
       </div>
     </div>
   </section>
