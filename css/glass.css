@@ -99,7 +99,6 @@ footer .wrap { border-top-color: color-mix(in srgb, var(--line) 55%, transparent
 @media (max-width: 700px) { .jobs { padding-inline: 20px; } }
 .rack { background: transparent; border: 0; gap: 14px; overflow: visible; border-radius: 0; }
 .unit { border-radius: 16px; overflow: hidden; }
-.unit .u { background: color-mix(in srgb, var(--panel) 30%, transparent); border-right-color: var(--glass-rim); }
 .all-projects { border-style: solid; }
 .browser { background: var(--glass-bg); border-color: var(--glass-rim); }
 .browser .bar { background: color-mix(in srgb, var(--panel) 40%, transparent); border-bottom-color: var(--glass-rim); }

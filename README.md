@@ -40,7 +40,7 @@ Plain HTML, CSS and JavaScript. No framework and no build step, served straight 
 | About | `#about` | 自我介紹，旁邊用 traceroute 終端機畫面呈現經歷路線 |
 | Experience | `#experience` | 工作經歷：時間、職稱、細節 |
 | Projects | `#projects` | 精選專案：TUYA 大卡片、3 張專案卡、早期作品，最下面是「See all projects →」 |
-| Skills | `#skills` | 「What's in the rack」，四格機櫃（U1–U4）放技能，下面是語言能力 |
+| Skills | `#skills` | 「What's in the rack」，四張技能卡片，下面是語言能力 |
 | Education | `#education` | RMIT（即將入學）、台師大 |
 | Contact | `#contact` | Email（有複製按鈕）、GitHub、LinkedIn |
 
@@ -138,13 +138,13 @@ GitHub Pages 會讓瀏覽器把檔案快取 **10 分鐘**。如果只更新了�
 
 ```html
 <!-- index.html 和 projects.html -->
-<link rel="stylesheet" href="css/glass.css?v=6">
+<link rel="stylesheet" href="css/glass.css?v=7">
 
 <!-- projects.html -->
-<script src="data/projects.js?v=6"></script>
+<script src="data/projects.js?v=7"></script>
 ```
 
-目前的版本號是 `v=6`。改 `index.html`、`projects.html` 本身不用改版本號。
+目前的版本號是 `v=7`。改 `index.html`、`projects.html` 本身不用改版本號。
 
 ---
 

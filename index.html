@@ -281,7 +281,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* skills: 2x2 rack */
 .rack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
 @media (max-width: 900px) { .rack { grid-template-columns: minmax(0, 1fr); } }
-.unit { display: grid; grid-template-columns: 52px minmax(0, 1fr); background: var(--panel); }
+.unit { display: block; background: var(--panel); }
 .unit .u { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-right: 1px solid var(--line); font-family: var(--f-mono); font-size: 11px; color: var(--faint); background: color-mix(in srgb, var(--ink) 3%, var(--panel)); }
 .unit .u .led { width: 6px; height: 6px; box-shadow: none; }
 .unit .in { padding: 24px 26px 26px; }
@@ -320,7 +320,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .pulse { animation: none; }
 }
 </style>
-<link rel="stylesheet" href="css/glass.css?v=6">
+<link rel="stylesheet" href="css/glass.css?v=7">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
@@ -550,10 +550,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <div class="t"><span class="eyebrow">Skills</span><h2>What's in the rack</h2></div>
       </div>
       <div class="rack">
-        <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U1</div><div class="in"><h3>Systems &amp; Infrastructure</h3><div class="tags"><span class="tag">Windows Server</span><span class="tag">Active Directory / GPO</span><span class="tag">VMware vSphere (HA)</span><span class="tag">Linux (Ubuntu)</span><span class="tag">Synology NAS</span><span class="tag">IP PBX</span><span class="tag">Postfix</span></div></div></div>
-        <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U2</div><div class="in"><h3>Networking &amp; Security</h3><div class="tags"><span class="tag">FortiGate</span><span class="tag">SSL-VPN</span><span class="tag">IPsec</span><span class="tag">Cloudflare DNS</span><span class="tag">Nessus</span><span class="tag">Endpoint Security</span><span class="tag">ISO 27001</span></div></div></div>
-        <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U3</div><div class="in"><h3>Cloud &amp; Collaboration</h3><div class="tags"><span class="tag">Google Workspace admin</span><span class="tag">AWS EC2</span><span class="tag">NAVER WORKS</span></div></div></div>
-        <div class="unit"><div class="u"><span class="led" aria-hidden="true"></span>U4</div><div class="in"><h3>Programming &amp; Development</h3><div class="tags"><span class="tag">Python (Flask, FastAPI)</span><span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Docker</span><span class="tag">Caddy</span><span class="tag">Git</span></div></div></div>
+        <div class="unit"><div class="in"><h3>Systems &amp; Infrastructure</h3><div class="tags"><span class="tag">Windows Server</span><span class="tag">Active Directory / GPO</span><span class="tag">VMware vSphere (HA)</span><span class="tag">Linux (Ubuntu)</span><span class="tag">Synology NAS</span><span class="tag">IP PBX</span><span class="tag">Postfix</span></div></div></div>
+        <div class="unit"><div class="in"><h3>Networking &amp; Security</h3><div class="tags"><span class="tag">FortiGate</span><span class="tag">SSL-VPN</span><span class="tag">IPsec</span><span class="tag">Cloudflare DNS</span><span class="tag">Nessus</span><span class="tag">Endpoint Security</span><span class="tag">ISO 27001</span></div></div></div>
+        <div class="unit"><div class="in"><h3>Cloud &amp; Collaboration</h3><div class="tags"><span class="tag">Google Workspace admin</span><span class="tag">AWS EC2</span><span class="tag">NAVER WORKS</span></div></div></div>
+        <div class="unit"><div class="in"><h3>Programming &amp; Development</h3><div class="tags"><span class="tag">Python (Flask, FastAPI)</span><span class="tag">JavaScript</span><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Docker</span><span class="tag">Caddy</span><span class="tag">Git</span></div></div></div>
       </div>
       <div class="langs">
         <div><b>Mandarin</b><span>Native</span></div>
