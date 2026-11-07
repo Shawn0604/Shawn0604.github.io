@@ -2,8 +2,8 @@
 
 Personal portfolio of **Shawn Tsai (蔡尚峰)**, an IT engineer from Taipei who starts a Master of IT at RMIT University, Melbourne, in 2027.
 
-- **Home:** https://shawn0604.github.io/Shawn-portfolio/
-- **All projects:** https://shawn0604.github.io/Shawn-portfolio/projects.html
+- **Home:** https://shawn0604.github.io/
+- **All projects:** https://shawn0604.github.io/projects.html
 
 Plain HTML, CSS and JavaScript. No framework and no build step, served straight from GitHub Pages.
 
@@ -58,7 +58,7 @@ Plain HTML, CSS and JavaScript. No framework and no build step, served straight 
 ## 檔案說明
 
 ```
-Shawn-portfolio/
+Shawn0604.github.io/
 ├── index.html          首頁。版面用的 CSS 寫在 <style> 裡，互動用的 JS 寫在頁尾
 ├── projects.html       作品索引頁。CSS 寫在 <style> 裡，JS 會讀取 data/projects.js 產生內容
 ├── css/
@@ -213,7 +213,7 @@ git push origin main
 用 GitHub CLI 查看部署狀態：
 
 ```bash
-gh api repos/Shawn0604/Shawn-portfolio/pages/builds/latest --jq '.status'
+gh api repos/Shawn0604/Shawn0604.github.io/pages/builds/latest --jq '.status'
 ```
 
 ---
