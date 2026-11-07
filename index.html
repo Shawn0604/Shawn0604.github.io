@@ -213,7 +213,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .job .org small { display: block; font-size: 14px; color: var(--faint); }
 .job ul { display: grid; gap: 10px; color: var(--muted); font-size: 16px; }
 .job li { position: relative; padding-left: 20px; }
-.job li::before { content: ""; position: absolute; left: 2px; top: .78em; width: 8px; height: 1.5px; background: var(--cable); }
+.job li::before { content: ""; position: absolute; left: 2px; top: .75em; width: 8px; height: 0; border-top: 2px solid var(--cable); }
 @media (max-width: 1080px) { .job .when { grid-column: 1 / span 3; } .job .role { grid-column: 4 / span 9; } .job .detail { grid-column: 4 / span 9; } }
 @media (max-width: 700px) { .job { grid-template-columns: minmax(0, 1fr); padding-block: 28px; } .job .when, .job .role, .job .detail { grid-column: 1; } }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
