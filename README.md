@@ -42,6 +42,7 @@ Plain HTML, CSS and JavaScript. No framework and no build step, served straight 
 | Projects | `#projects` | 精選專案：TUYA 大卡片、3 張專案卡、早期作品，最下面是「See all projects →」 |
 | Skills | `#skills` | 「What's in the rack」，四張技能卡片，下面是語言能力 |
 | Education | `#education` | RMIT（即將入學）、台師大 |
+| About me | `#me` | 「Off the clock」生活照，點照片會用毛玻璃視窗放大，可以用左右鍵切換 |
 | Contact | `#contact` | Email（有複製按鈕）、GitHub、LinkedIn |
 
 ### `projects.html`：完整作品索引
@@ -68,6 +69,7 @@ Shawn0604.github.io/
 ├── js/
 │   └── site.js         兩頁共用的互動：深淺色切換、手機選單、捲動淡入、跟著滑鼠的玻璃反光
 ├── images/
+│   ├── me/             About me 的生活照（已縮到 1000px 寬）
 │   ├── tuya-home.jpg   首頁 TUYA 卡片的截圖（800×506）
 │   └── tuya-icon.png   TUYA 的圖示（48×48）
 ├── favicon.svg         分頁圖示
@@ -122,6 +124,14 @@ Shawn0604.github.io/
 
 > 首頁放精選，`projects.html` 放全部。新增專案時通常只要改 `data/projects.js`，除非要把它升級成首頁精選。
 
+### 新增或更換 About me 的照片
+
+1. 把照片縮到寬 1000px 左右（約 200–350 KB），放進 `images/me/`。
+2. 在 `index.html` 搜尋 `class="gallery"`，複製一個 `<li>`，改 `src`、`alt`（給螢幕閱讀器的描述）和 `.cap`（照片上的說明）。
+3. 照片會裁成 3:4。如果人物被切到，調整 `style="object-position:50% 50%"`，第一個數字是左右位置、第二個是上下位置。
+
+電腦上一排放 5 張，超過 5 張會換到下一排。平板和手機上會變成可以左右滑的一列。
+
 ### 修改經歷、技能、學歷
 
 都在 `index.html` 裡，搜尋對應的錨點：
@@ -141,16 +151,16 @@ GitHub Pages 會讓瀏覽器把檔案快取 **10 分鐘**。如果只更新了�
 
 ```html
 <!-- index.html 和 projects.html -->
-<link rel="stylesheet" href="css/glass.css?v=11">
+<link rel="stylesheet" href="css/glass.css?v=12">
 
 <!-- index.html 和 projects.html -->
-<script src="js/site.js?v=11"></script>
+<script src="js/site.js?v=12"></script>
 
 <!-- projects.html -->
-<script src="data/projects.js?v=11"></script>
+<script src="data/projects.js?v=12"></script>
 ```
 
-目前的版本號是 `v=11`。改 `index.html`、`projects.html` 本身不用改版本號。
+目前的版本號是 `v=12`。改 `index.html`、`projects.html` 本身不用改版本號。
 
 ---
 
