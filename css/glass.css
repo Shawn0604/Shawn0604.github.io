@@ -1,0 +1,122 @@
+/* Glass layer, shared by index.html and projects.html.
+   Loaded after each page's own <style>, so these rules override the flat panels.
+   A soft colour field (.aurora) sits behind the page; panels are frosted glass over it. */
+
+:root {
+  --glass-bg: rgba(255, 255, 255, .52);
+  --glass-bg-hover: rgba(255, 255, 255, .68);
+  --glass-rim: rgba(255, 255, 255, .85);
+  --glass-edge: rgba(15, 23, 32, .07);
+  --glass-hi: rgba(255, 255, 255, .9);
+  --glass-drop: rgba(30, 50, 80, .22);
+  --glass-blur: blur(22px) saturate(180%);
+  --aurora-a: rgba(29, 91, 201, .38);
+  --aurora-b: rgba(242, 180, 65, .40);
+  --aurora-c: rgba(110, 86, 207, .30);
+  --aurora-d: rgba(27, 146, 85, .22);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --glass-bg: rgba(22, 31, 40, .48);
+    --glass-bg-hover: rgba(30, 41, 52, .6);
+    --glass-rim: rgba(255, 255, 255, .10);
+    --glass-edge: rgba(255, 255, 255, .06);
+    --glass-hi: rgba(255, 255, 255, .08);
+    --glass-drop: rgba(0, 0, 0, .55);
+    --aurora-a: rgba(120, 170, 255, .20);
+    --aurora-b: rgba(242, 180, 65, .13);
+    --aurora-c: rgba(165, 148, 249, .17);
+    --aurora-d: rgba(63, 212, 139, .10);
+  }
+}
+:root[data-theme="dark"] {
+  --glass-bg: rgba(22, 31, 40, .48);
+  --glass-bg-hover: rgba(30, 41, 52, .6);
+  --glass-rim: rgba(255, 255, 255, .10);
+  --glass-edge: rgba(255, 255, 255, .06);
+  --glass-hi: rgba(255, 255, 255, .08);
+  --glass-drop: rgba(0, 0, 0, .55);
+  --aurora-a: rgba(120, 170, 255, .20);
+  --aurora-b: rgba(242, 180, 65, .13);
+  --aurora-c: rgba(165, 148, 249, .17);
+  --aurora-d: rgba(63, 212, 139, .10);
+}
+
+/* ---------- colour field behind everything ---------- */
+.aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.aurora span { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; will-change: transform; animation: drift 38s ease-in-out infinite alternate; }
+.aurora span:nth-child(1) { top: -22vmax; left: -14vmax; background: radial-gradient(circle, var(--aurora-a), transparent 66%); }
+.aurora span:nth-child(2) { top: -10vmax; right: -24vmax; background: radial-gradient(circle, var(--aurora-b), transparent 66%); animation-duration: 46s; animation-delay: -12s; }
+.aurora span:nth-child(3) { bottom: -28vmax; left: 18vmax; background: radial-gradient(circle, var(--aurora-c), transparent 66%); animation-duration: 52s; animation-delay: -20s; }
+.aurora span:nth-child(4) { bottom: -18vmax; right: -12vmax; width: 44vmax; height: 44vmax; background: radial-gradient(circle, var(--aurora-d), transparent 66%); animation-duration: 42s; animation-delay: -6s; }
+@keyframes drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(6vmax, 4vmax, 0) scale(1.08); }
+  100% { transform: translate3d(-4vmax, 7vmax, 0) scale(.96); }
+}
+
+/* ---------- the glass surface ---------- */
+.feature, .proj, .unit, .school, .earlier a, .all-projects, .jobs, .status, .btn:not(.solid),
+.card, .chip:not([aria-pressed="true"]), .g-head .u, .practice li, .stats > div {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-rim);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 1px 0 var(--glass-hi), 0 0 0 1px var(--glass-edge), 0 24px 48px -30px var(--glass-drop);
+}
+.btn:not(.solid):hover, .chip:not([aria-pressed="true"]):hover { background: var(--glass-bg-hover); border-color: var(--glass-rim); }
+.btn.solid { box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--ink) 60%, transparent); }
+
+/* hover lift for anything clickable or card-like */
+.proj:hover, .card:hover, .earlier a:hover {
+  background: var(--glass-bg-hover);
+  border-color: color-mix(in srgb, var(--cable) 40%, var(--glass-rim));
+  box-shadow: inset 0 1px 0 var(--glass-hi), 0 0 0 1px var(--glass-edge), 0 32px 60px -30px var(--glass-drop);
+}
+
+/* top bar and sticky filter bar: frosted strip */
+.top, .filters {
+  background: color-mix(in srgb, var(--paper) 45%, transparent);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+.top.scrolled { border-bottom-color: var(--glass-rim); box-shadow: 0 10px 30px -24px var(--glass-drop); }
+.filters { border-color: var(--glass-rim); }
+
+/* sections: softer dividers so the colour field reads through */
+.block, .group { border-color: color-mix(in srgb, var(--line) 55%, transparent); }
+footer .wrap { border-top-color: color-mix(in srgb, var(--line) 55%, transparent); }
+
+/* tags: tinted glass chips */
+.tag { background: color-mix(in srgb, var(--panel) 45%, transparent); box-shadow: inset 0 0 0 1px var(--glass-edge); }
+
+/* home page specifics */
+.feature { border-radius: 24px; }
+.jobs { border-radius: 20px; padding-inline: 32px; }
+.jobs .job:last-child { border-bottom: 0; }
+.job { border-bottom-color: color-mix(in srgb, var(--line) 60%, transparent); }
+@media (max-width: 700px) { .jobs { padding-inline: 20px; } }
+.rack { background: transparent; border: 0; gap: 14px; overflow: visible; border-radius: 0; }
+.unit { border-radius: 16px; overflow: hidden; }
+.unit .u { background: color-mix(in srgb, var(--panel) 30%, transparent); border-right-color: var(--glass-rim); }
+.all-projects { border-style: solid; }
+.term { background: color-mix(in srgb, var(--term-bg) 84%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.browser { background: var(--glass-bg); border-color: var(--glass-rim); }
+.browser .bar { background: color-mix(in srgb, var(--panel) 40%, transparent); border-bottom-color: var(--glass-rim); }
+.browser .bar span { background: color-mix(in srgb, var(--paper) 60%, transparent); }
+
+/* projects page specifics */
+.stats > div { padding: 18px 22px; border-radius: 16px; min-width: 150px; }
+.g-head .u { border-radius: 12px; }
+.practice li { border-style: solid; }
+.links { border-top-color: color-mix(in srgb, var(--line) 70%, transparent); }
+
+/* browsers without backdrop-filter: make the panels solid enough to read */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .feature, .proj, .unit, .school, .earlier a, .all-projects, .jobs, .status, .btn:not(.solid),
+  .card, .chip:not([aria-pressed="true"]), .g-head .u, .practice li, .stats > div, .top, .filters {
+    background: color-mix(in srgb, var(--panel) 92%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) { .aurora span { animation: none; } }

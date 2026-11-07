@@ -93,6 +93,7 @@ window.PROJECT_GROUPS = [
         status: "live",
         blurb: "A daily email of a dozen market and tech picks from news and podcasts. Readers choose which sections they get.",
         tags: ["Google Apps Script", "Cloudflare Pages", "Email"],
+        links: { live: "https://fiveminute-5hu.pages.dev" },
         repos: ["podcast-collection"]
       },
       {
