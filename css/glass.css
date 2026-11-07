@@ -57,14 +57,14 @@
 
 /* ---------- the glass surface ---------- */
 .feature, .proj, .unit, .school, .earlier a, .all-projects, .jobs, .status, .btn:not(.solid),
-.card, .chip:not([aria-pressed="true"]), .g-head .u, .practice li, .stats > div {
+.card, .chipbar, .practice li, .stats > div {
   background: var(--glass-bg);
   border: 1px solid var(--glass-rim);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
   box-shadow: inset 0 1px 0 var(--glass-hi), 0 0 0 1px var(--glass-edge), 0 24px 48px -30px var(--glass-drop);
 }
-.btn:not(.solid):hover, .chip:not([aria-pressed="true"]):hover { background: var(--glass-bg-hover); border-color: var(--glass-rim); }
+.btn:not(.solid):hover { background: var(--glass-bg-hover); border-color: var(--glass-rim); }
 .btn.solid { box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--ink) 60%, transparent); }
 
 /* hover lift for anything clickable or card-like */
@@ -74,14 +74,15 @@
   box-shadow: inset 0 1px 0 var(--glass-hi), 0 0 0 1px var(--glass-edge), 0 32px 60px -30px var(--glass-drop);
 }
 
-/* top bar and sticky filter bar: frosted strip */
-.top, .filters {
+/* top bar: frosted strip */
+.top {
   background: color-mix(in srgb, var(--paper) 45%, transparent);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
 }
 .top.scrolled { border-bottom-color: var(--glass-rim); box-shadow: 0 10px 30px -24px var(--glass-drop); }
-.filters { border-color: var(--glass-rim); }
+/* filter pill floats on its own, so it needs a stronger frost to stay readable over cards */
+.chipbar { background: color-mix(in srgb, var(--glass-bg-hover) 100%, transparent); box-shadow: inset 0 1px 0 var(--glass-hi), 0 0 0 1px var(--glass-edge), 0 14px 34px -18px var(--glass-drop); }
 
 /* sections: softer dividers so the colour field reads through */
 .block, .group { border-color: color-mix(in srgb, var(--line) 55%, transparent); }
@@ -107,14 +108,13 @@ footer .wrap { border-top-color: color-mix(in srgb, var(--line) 55%, transparent
 
 /* projects page specifics */
 .stats > div { padding: 18px 22px; border-radius: 16px; min-width: 150px; }
-.g-head .u { border-radius: 12px; }
 .practice li { border-style: solid; }
 .links { border-top-color: color-mix(in srgb, var(--line) 70%, transparent); }
 
 /* browsers without backdrop-filter: make the panels solid enough to read */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .feature, .proj, .unit, .school, .earlier a, .all-projects, .jobs, .status, .btn:not(.solid),
-  .card, .chip:not([aria-pressed="true"]), .g-head .u, .practice li, .stats > div, .top, .filters {
+  .card, .chipbar, .practice li, .stats > div, .top {
     background: color-mix(in srgb, var(--panel) 92%, transparent);
   }
 }

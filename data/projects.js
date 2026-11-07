@@ -9,7 +9,6 @@
 window.PROJECT_GROUPS = [
   {
     id: "work",
-    unit: "U1",
     title: "Built at work",
     note: "Internal tools for CoAsia. The code stays private; happy to walk through any of them.",
     projects: [
@@ -65,7 +64,6 @@ window.PROJECT_GROUPS = [
   },
   {
     id: "side",
-    unit: "U2",
     title: "Side projects",
     note: "Things I build in my own time and put in front of real users.",
     projects: [
@@ -108,7 +106,6 @@ window.PROJECT_GROUPS = [
   },
   {
     id: "research",
-    unit: "U3",
     title: "AI and data research",
     note: "From university and the Educational Big Data Program.",
     projects: [
@@ -142,7 +139,6 @@ window.PROJECT_GROUPS = [
   },
   {
     id: "earlier",
-    unit: "U4",
     title: "Earlier web projects",
     note: "From AppWorks School, WeHelp and team projects, 2023 to 2024.",
     projects: [

@@ -71,23 +71,23 @@ ul { margin: 0; padding: 0; list-style: none; }
 .stats b { font-family: var(--f-display); font-stretch: 115%; font-weight: 850; font-size: 2.4rem; line-height: 1; color: var(--cable); font-variant-numeric: tabular-nums; }
 .stats span { margin-top: 6px; font-family: var(--f-mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--faint); }
 
-/* filter chips */
-.filters { position: sticky; top: 64px; z-index: 5; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(10px); border-block: 1px solid var(--line); }
-.filters .wrap { display: flex; gap: 8px; padding-block: 12px; overflow-x: auto; scrollbar-width: none; }
-.chip { flex: none; display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 13px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); cursor: pointer; }
-.chip:hover { color: var(--ink); border-color: color-mix(in srgb, var(--ink) 40%, var(--line)); }
-.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-.chip .n { opacity: .6; font-variant-numeric: tabular-nums; }
+/* filter: one floating segmented pill, sticky under the top bar */
+.filters { position: sticky; top: 72px; z-index: 5; pointer-events: none; padding-bottom: 8px; }
+.chipbar { pointer-events: auto; display: inline-flex; gap: 2px; max-width: 100%; overflow-x: auto; scrollbar-width: none; padding: 5px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); }
+.chipbar::-webkit-scrollbar { display: none; }
+.chip { flex: none; display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-mono); font-size: 13px; padding: 7px 15px; border-radius: 999px; border: 0; background: transparent; color: var(--muted); cursor: pointer; transition: background .15s, color .15s; }
+.chip:hover { color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.chip .n { opacity: .55; font-variant-numeric: tabular-nums; }
 
 /* groups */
 .group { border-bottom: 1px solid var(--line); }
 .group > .wrap { padding-block: 64px; }
-.g-head { display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 22em); gap: 8px 24px; align-items: end; margin-bottom: 32px; }
-.g-head .u { align-self: stretch; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); font-family: var(--f-mono); font-size: 12px; color: var(--faint); min-height: 64px; }
-.g-head .u .led { width: 6px; height: 6px; box-shadow: none; }
+.g-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 22em); gap: 8px 32px; align-items: end; margin-bottom: 32px; }
+.g-head .eyebrow { margin-bottom: 10px; }
 .g-head h2 { font-family: var(--f-display); font-stretch: 112%; font-weight: 800; font-size: clamp(1.7rem, 3vw, 2.3rem); line-height: 1.05; letter-spacing: -.015em; }
 .g-head p { color: var(--muted); font-size: 15.5px; }
-@media (max-width: 800px) { .g-head { grid-template-columns: 52px minmax(0, 1fr); } .g-head p { grid-column: 1 / -1; } }
+@media (max-width: 800px) { .g-head { grid-template-columns: minmax(0, 1fr); } }
 
 .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 @media (max-width: 1080px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -153,8 +153,8 @@ footer a { color: var(--muted); }
     </div>
   </section>
 
-  <div class="filters" role="toolbar" aria-label="Filter by status">
-    <div class="wrap" id="filters"></div>
+  <div class="filters">
+    <div class="wrap"><div class="chipbar" id="filters" role="toolbar" aria-label="Filter by status"></div></div>
   </div>
 
   <div id="groups">
@@ -164,8 +164,7 @@ footer a { color: var(--muted); }
   <section class="group" id="practice-sec">
     <div class="wrap">
       <div class="g-head">
-        <div class="u"><span class="led" aria-hidden="true"></span>U5</div>
-        <h2>Practice</h2>
+        <div><span class="eyebrow">Exercises</span><h2>Practice</h2></div>
         <p>Exercises and course work, kept for the record.</p>
       </div>
       <ul class="practice" id="practice"></ul>
@@ -235,8 +234,8 @@ footer a { color: var(--muted); }
 
   document.getElementById('groups').innerHTML = GROUPS.map(function (g) {
     return '<section class="group" id="' + esc(g.id) + '"><div class="wrap">' +
-      '<div class="g-head"><div class="u"><span class="led" aria-hidden="true"></span>' + esc(g.unit) + '</div>' +
-      '<h2>' + esc(g.title) + '</h2><p>' + esc(g.note) + '</p></div>' +
+      '<div class="g-head"><div><span class="eyebrow">' + g.projects.length + ' projects</span>' +
+      '<h2>' + esc(g.title) + '</h2></div><p>' + esc(g.note) + '</p></div>' +
       '<div class="cards">' + g.projects.map(card).join('') + '</div>' +
       '</div></section>';
   }).join('');
