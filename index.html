@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&text=%E8%94%A1%E5%B0%9A%E5%B3%B0%E7%AA%81%E9%9B%85&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&text=%E8%94%A1%E5%B0%9A%E5%B3%B0%E7%AA%81%E9%9B%85%E6%8F%AA%E5%8F%8B%E6%97%A9%E4%B8%8A%E4%BA%94%E5%88%86%E9%90%98&display=swap">
 <style>
 /* Layout: desktop-first 12-column page, 1200px wide. Hero pairs the name with the office cat cam;
    every section opens with the same head, then uses the full width (table-like rows, 3-up cards, 2x2 rack). */
@@ -264,6 +264,15 @@ ul { margin: 0; padding: 0; list-style: none; }
 .proj li::before { content: "→"; position: absolute; left: 0; top: .05em; color: var(--cable); font-family: var(--f-mono); font-size: 13px; }
 .proj .tags { margin-top: auto; padding-top: 22px; }
 
+.side-head { margin-top: 56px; margin-bottom: 20px; }
+.side-head h3 { font-family: var(--f-display); font-stretch: 105%; font-weight: 750; font-size: 1.1rem; }
+.side-head h3 small { display: block; margin-top: 4px; font-family: var(--f-body); font-weight: 400; font-size: 15px; color: var(--muted); }
+.projects.side { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 1080px) { .projects.side { grid-template-columns: minmax(0, 1fr); } }
+.projects.side .live { align-self: flex-start; margin-bottom: 14px; }
+.proj h3 .tc { font-family: var(--f-tc); font-weight: 700; font-size: .8em; color: var(--muted); margin-left: .25em; letter-spacing: .04em; }
+.proj .go-sm { align-self: flex-start; margin-top: 18px; }
+.projects.side .tags { margin-top: 0; padding-top: 22px; }
 .earlier { margin-top: 56px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 32px; }
 .earlier h3 { grid-column: 1 / span 3; font-family: var(--f-display); font-stretch: 105%; font-weight: 750; font-size: 1.1rem; }
 .earlier h3 small { display: block; margin-top: 4px; font-family: var(--f-body); font-weight: 400; font-size: 15px; color: var(--muted); }
@@ -468,7 +477,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="wrap">
       <div class="sec-head">
         <div class="t"><span class="eyebrow">Projects</span><h2>Things I've built</h2></div>
-        <p class="note">An IELTS learning site I'm building now, and tools that started as real problems at work.</p>
+        <p class="note">Things I've shipped on my own, and tools that started as real problems at work.</p>
       </div>
       <article class="feature">
         <div class="feature-text">
@@ -528,6 +537,38 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
             <li>Redraw support, with a data refresh before each round.</li>
           </ul>
           <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">Flask</span><span class="tag">MySQL</span></div>
+        </article>
+      </div>
+
+      <div class="side-head">
+        <h3>Also live<small>Side projects anyone can open today</small></h3>
+      </div>
+      <div class="projects side">
+        <article class="proj">
+          <div class="fig"><div><b>3</b><span>platforms</span></div><div><b>24h</b><span>to say hi</span></div></div>
+          <span class="live"><span class="pulse" aria-hidden="true"></span>Live</span>
+          <h3>Jiuyou <span class="tc" lang="zh-Hant">揪友</span></h3>
+          <p class="why">A swipe-to-match app for meeting new friends in Taiwan to hike, eat or play board games with.</p>
+          <ul>
+            <li>Friend mode and dating mode, each with its own matches. A match expires if nobody says hi within 24 hours.</li>
+            <li>One Expo codebase for iOS, Android and the web, with live chat on Supabase Realtime.</li>
+            <li>Cloudflare Turnstile keeps bots from flooding sign-up codes.</li>
+          </ul>
+          <div class="tags"><span class="tag">Expo</span><span class="tag">React Native</span><span class="tag">Supabase</span><span class="tag">Cloudflare Pages</span></div>
+          <a class="btn go-sm" href="https://jiuyou-tw.pages.dev" target="_blank" rel="noopener">Open Jiuyou ↗</a>
+        </article>
+        <article class="proj">
+          <div class="fig"><div><b>13</b><span>podcast feeds</span></div><div><b>08:45</b><span>daily send</span></div></div>
+          <span class="live"><span class="pulse" aria-hidden="true"></span>Live</span>
+          <h3>Five-Minute Morning <span class="tc" lang="zh-Hant">早上五分鐘</span></h3>
+          <p class="why">A daily email of a dozen market and tech picks, each in two or three sentences. Readers choose which sections they get.</p>
+          <ul>
+            <li>GitHub Actions collect podcast episodes and official data overnight; a scheduled AI agent picks the stories and writes the summaries.</li>
+            <li>A check script blocks the issue if a section, link or source record is wrong.</li>
+            <li>Subscribers sign up and pick sections on the site; Apps Script sends each person their own version.</li>
+          </ul>
+          <div class="tags"><span class="tag">GitHub Actions</span><span class="tag">AI agent</span><span class="tag">Google Apps Script</span><span class="tag">Cloudflare Pages</span></div>
+          <a class="btn go-sm" href="https://fiveminute-5hu.pages.dev" target="_blank" rel="noopener">Subscribe ↗</a>
         </article>
       </div>
 

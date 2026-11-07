@@ -117,6 +117,7 @@ Shawn0604.github.io/
 
 - `<article class="feature">`：最上面的大卡片（目前是 TUYA）。截圖放在 `images/`，建議尺寸 800×506。
 - `<article class="proj">`：下面的三張卡片。`.fig` 裡放大數字，`ul` 裡放三個重點，`.tags` 放技術標籤。
+- `<div class="projects side">`：「Also live」區塊，放已經上線的 side project（目前是揪友、早上五分鐘），每張卡片有開啟網站的按鈕。
 - `<div class="earlier">`：早期作品的三個連結。
 
 > 首頁放精選，`projects.html` 放全部。新增專案時通常只要改 `data/projects.js`，除非要把它升級成首頁精選。
