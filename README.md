@@ -65,6 +65,8 @@ Shawn0604.github.io/
 │   └── glass.css       兩頁共用的玻璃效果和背景色塊，載入順序在各頁 <style> 之後
 ├── data/
 │   └── projects.js     作品索引的資料，以後新增專案只要改這個檔案
+├── js/
+│   └── site.js         兩頁共用的互動：深淺色切換、手機選單、捲動淡入、跟著滑鼠的玻璃反光
 ├── images/
 │   ├── tuya-home.jpg   首頁 TUYA 卡片的截圖（800×506）
 │   └── tuya-icon.png   TUYA 的圖示（48×48）
@@ -134,17 +136,20 @@ Shawn0604.github.io/
 
 GitHub Pages 會讓瀏覽器把檔案快取 **10 分鐘**。如果只更新了檔案、沒改網址，訪客可能會拿到新的頁面配上舊的 CSS，畫面就會跑掉。
 
-所以每次修改 `css/glass.css` 或 `data/projects.js`，都要把引用它們的網址版本號 **+1**：
+所以每次修改 `css/glass.css`、`js/site.js` 或 `data/projects.js`，都要把引用它們的網址版本號 **+1**（三個檔案共用同一個數字）：
 
 ```html
 <!-- index.html 和 projects.html -->
-<link rel="stylesheet" href="css/glass.css?v=8">
+<link rel="stylesheet" href="css/glass.css?v=11">
+
+<!-- index.html 和 projects.html -->
+<script src="js/site.js?v=11"></script>
 
 <!-- projects.html -->
-<script src="data/projects.js?v=8"></script>
+<script src="data/projects.js?v=11"></script>
 ```
 
-目前的版本號是 `v=8`。改 `index.html`、`projects.html` 本身不用改版本號。
+目前的版本號是 `v=11`。改 `index.html`、`projects.html` 本身不用改版本號。
 
 ---
 
@@ -174,6 +179,14 @@ GitHub Pages 會讓瀏覽器把檔案快取 **10 分鐘**。如果只更新了�
 | `--amber` | Live 狀態、即將發生的事 |
 | `--led` | 綠燈，表示正在運作 |
 | `--term-*` | 終端機和攝影機的深色配色 |
+
+### 共用互動（`js/site.js`）
+- **深淺色切換**：導覽列的太陽／月亮按鈕。選擇會存在 `localStorage`，下次打開會記得。沒選過就跟著系統設定。`<head>` 裡有一小段 script 會在頁面畫出來之前先套用主題，避免閃一下。
+- **手機選單**：寬度小於 900px 時，導覽連結會收進漢堡按鈕。點連結、按 Esc 或點選單外面都會關閉選單。
+- **捲動淡入**：區塊標題和卡片進入畫面時，會從下方淡入，同一排的卡片會依序出現。一開始就在畫面裡的元素不套用這個效果。
+- **玻璃反光**：用滑鼠移過卡片時，會有一圈柔光跟著游標移動。只在有滑鼠的裝置上啟用。
+
+> 頂端導覽列的毛玻璃是畫在 `.top::before` 上，不是 `.top` 本身。如果 `.top` 自己有 `backdrop-filter`，裡面的手機選單就沒辦法模糊後面的頁面。
 
 ### 玻璃效果（`css/glass.css`）
 - **`.aurora`**：固定在最底層的四團漸層色塊，用 `transform` 慢慢飄動，效能負擔很小。要調濃淡就改 `--aurora-a` 到 `--aurora-d` 的透明度。
@@ -221,7 +234,7 @@ gh api repos/Shawn0604/Shawn0604.github.io/pages/builds/latest --jq '.status'
 ## 無障礙與相容性
 
 - **深色模式**：跟隨系統設定（`prefers-color-scheme`）。也可以在 `<html>` 加上 `data-theme="light"` 或 `data-theme="dark"` 強制指定。
-- **減少動態效果**：系統開啟時（`prefers-reduced-motion`），背景色塊停止飄動，卡片不會浮起，REC 燈、游標和 Live 脈衝也不會閃。
+- **減少動態效果**：系統開啟時（`prefers-reduced-motion`），捲動淡入和玻璃反光都會關閉，背景色塊停止飄動，卡片不會浮起，REC 燈、游標和 Live 脈衝也不會閃。
 - **不支援 `backdrop-filter` 的瀏覽器**：玻璃面板會自動改成接近不透明，文字照樣看得清楚。
 - **鍵盤操作**：所有連結和按鈕都有明顯的 focus 外框。首頁按 `C` 可以換一隻貓。
 - **純裝飾的元素**（背景色塊、LED、終端機內容）都標了 `aria-hidden`。traceroute 另外用 `aria-label` 提供文字說明給螢幕閱讀器。

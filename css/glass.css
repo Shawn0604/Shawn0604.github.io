@@ -75,7 +75,11 @@
 }
 
 /* top bar: frosted strip */
-.top {
+/* The frost is drawn on ::before, not on .top itself: a backdrop-filter on .top would make it a
+   backdrop root, and the phone menu inside it could then no longer blur the page behind. */
+.top { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.top::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: color-mix(in srgb, var(--paper) 45%, transparent);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
@@ -131,3 +135,69 @@ footer .wrap { border-top-color: color-mix(in srgb, var(--line) 55%, transparent
 
 /* brand: the name in the display face, matching the page headings */
 .brand { font-family: var(--f-display); font-stretch: 112%; font-weight: 800; font-size: 17px; letter-spacing: -.01em; }
+
+/* ---------- header icon buttons: theme toggle and phone menu ---------- */
+.icon-btn {
+  flex: none; display: inline-grid; place-items: center; width: 38px; height: 38px; padding: 0; border-radius: 50%; cursor: pointer; color: var(--ink);
+  background: var(--glass-bg); border: 1px solid var(--glass-rim);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  box-shadow: inset 0 1px 0 var(--glass-hi), 0 0 0 1px var(--glass-edge);
+  transition: background .15s, transform .15s;
+}
+.icon-btn:hover { background: var(--glass-bg-hover); }
+.icon-btn:active { transform: scale(.94); }
+.icon-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon-btn:focus-visible { outline: 2px solid var(--cable); outline-offset: 3px; }
+#theme-btn .moon { display: none; }
+#theme-btn[aria-pressed="true"] .sun { display: none; }
+#theme-btn[aria-pressed="true"] .moon { display: block; }
+.top .wrap { gap: 12px; }
+.top .nav { margin-right: 12px; }
+#menu-btn { display: none; }
+@media (max-width: 900px) {
+  #menu-btn { display: inline-grid; }
+  #menu-btn .x { display: none; }
+  .top.open #menu-btn .x { display: block; }
+  .top.open #menu-btn .bars { display: none; }
+  /* the nav becomes a glass panel under the bar */
+  .top.open .nav {
+    display: flex; flex-direction: column; gap: 2px; position: absolute; top: 60px; right: max(16px, env(safe-area-inset-right, 0px)); min-width: 220px; margin: 0; padding: 8px; border-radius: 18px;
+    background: color-mix(in srgb, var(--paper) 72%, transparent); border: 1px solid var(--glass-rim);
+    -webkit-backdrop-filter: blur(28px) saturate(190%); backdrop-filter: blur(28px) saturate(190%);
+    box-shadow: inset 0 1px 0 var(--glass-hi), 0 0 0 1px var(--glass-edge), 0 24px 50px -20px var(--glass-drop);
+    animation: menu-in .18s ease-out;
+  }
+  .top.open .nav a { padding: 11px 14px; font-size: 16px; color: var(--ink); }
+  .top.open .nav a.on::after { display: none; }
+}
+@media (max-width: 420px) { .top .btn { padding: 8px 12px; } }
+@keyframes menu-in { from { transform: translateY(-6px) scale(.98); } }
+
+/* ---------- reveal on scroll (classes added by js/site.js) ---------- */
+.reveal { opacity: 0; translate: 0 18px; transition: opacity .7s ease, translate .7s cubic-bezier(.2,.8,.2,1), transform .2s, border-color .2s, box-shadow .2s, background .2s; }
+.reveal.in { opacity: 1; translate: 0 0; }
+
+/* ---------- glass sheen that follows the pointer ---------- */
+.feature, .proj, .card, .unit, .school, .jobs, .stats > div { position: relative; }
+.feature::after, .proj::after, .card::after, .unit::after, .school::after, .jobs::after, .stats > div::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, .42), transparent 55%);
+  mix-blend-mode: soft-light;
+}
+.feature:hover::after, .proj:hover::after, .card:hover::after, .unit:hover::after, .school:hover::after, .jobs:hover::after, .stats > div:hover::after { opacity: 1; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .feature::after, :root:not([data-theme="light"]) .proj::after, :root:not([data-theme="light"]) .card::after, :root:not([data-theme="light"]) .unit::after, :root:not([data-theme="light"]) .school::after, :root:not([data-theme="light"]) .jobs::after, :root:not([data-theme="light"]) .stats > div::after { mix-blend-mode: normal; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, .06), transparent 55%); } }
+:root[data-theme="dark"] .feature::after, :root[data-theme="dark"] .proj::after, :root[data-theme="dark"] .card::after, :root[data-theme="dark"] .unit::after, :root[data-theme="dark"] .school::after, :root[data-theme="dark"] .jobs::after, :root[data-theme="dark"] .stats > div::after { mix-blend-mode: normal; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, .06), transparent 55%); }
+
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; translate: none; } .top.open .nav { animation: none; } }
+
+/* ---------- small screens: keep the bar on one line, stats in one row ---------- */
+.brand, .top .btn { white-space: nowrap; }
+.show-sm { display: none; }
+@media (max-width: 560px) {
+  .hide-sm { display: none; }
+  .show-sm { display: inline; }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .stats > div { min-width: 0; padding: 14px 14px; }
+  .stats b { font-size: 1.9rem; }
+  .stats span { font-size: 10.5px; }
+}
