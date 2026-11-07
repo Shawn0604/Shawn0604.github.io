@@ -101,7 +101,6 @@ footer .wrap { border-top-color: color-mix(in srgb, var(--line) 55%, transparent
 .unit { border-radius: 16px; overflow: hidden; }
 .unit .u { background: color-mix(in srgb, var(--panel) 30%, transparent); border-right-color: var(--glass-rim); }
 .all-projects { border-style: solid; }
-.term { background: color-mix(in srgb, var(--term-bg) 84%, transparent); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
 .browser { background: var(--glass-bg); border-color: var(--glass-rim); }
 .browser .bar { background: color-mix(in srgb, var(--panel) 40%, transparent); border-bottom-color: var(--glass-rim); }
 .browser .bar span { background: color-mix(in srgb, var(--paper) 60%, transparent); }

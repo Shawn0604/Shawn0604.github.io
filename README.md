@@ -138,13 +138,13 @@ GitHub Pages 會讓瀏覽器把檔案快取 **10 分鐘**。如果只更新了�
 
 ```html
 <!-- index.html 和 projects.html -->
-<link rel="stylesheet" href="css/glass.css?v=5">
+<link rel="stylesheet" href="css/glass.css?v=6">
 
 <!-- projects.html -->
-<script src="data/projects.js?v=5"></script>
+<script src="data/projects.js?v=6"></script>
 ```
 
-目前的版本號是 `v=5`。改 `index.html`、`projects.html` 本身不用改版本號。
+目前的版本號是 `v=6`。改 `index.html`、`projects.html` 本身不用改版本號。
 
 ---
 
