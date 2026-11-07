@@ -48,7 +48,7 @@
   }
 
   /* ---------- reveal on scroll ---------- */
-  var targets = document.querySelectorAll('.sec-head, .g-head, .feature, .proj, .earlier li, .all-projects, .job, .term, .unit, .school, .card, .practice li, .stats > div, .gallery li');
+  var targets = document.querySelectorAll('.sec-head, .g-head, .feature, .proj, .earlier li, .all-projects, .job, .term, .unit, .school, .card, .practice li, .stats > div, .slideshow');
   if (!reduce && 'IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {

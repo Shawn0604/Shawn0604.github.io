@@ -288,21 +288,43 @@ ul { margin: 0; padding: 0; list-style: none; }
 .all-projects { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding: 24px 28px; border-radius: 16px; border: 1px dashed var(--line); }
 .all-projects p { color: var(--muted); }
 
-/* about me: photo strip, then a lightbox */
-.gallery { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
-.gallery li { min-width: 0; }
-.shot { position: relative; display: block; width: 100%; padding: 8px; border-radius: 18px; cursor: zoom-in; font: inherit; color: inherit; text-align: left; transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s; }
-.shot img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 12px; }
-.shot .cap { position: absolute; left: 16px; right: 16px; bottom: 16px; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 500; line-height: 1.35; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.35);
+/* about me: one photo at a time, cross-fading on a timer, inside a glass frame */
+#me > .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 32px 64px; align-items: center; }
+#me .sec-head { grid-template-columns: minmax(0, 1fr); margin-bottom: 0; }
+#me .sec-head .t, #me .sec-head .note { grid-column: 1; }
+#me .sec-head .note { max-width: 26em; margin-top: 8px; }
+#me .slideshow { width: 100%; }
+@media (max-width: 900px) { #me > .wrap { grid-template-columns: minmax(0, 1fr); } #me .slideshow { max-width: 460px; margin: 0; } }
+.slideshow { position: relative; width: min(100%, 520px); margin: 0 auto; padding: 10px; border-radius: 26px; }
+.ss-stage { position: relative; display: block; width: 100%; aspect-ratio: 3 / 4; padding: 0; border: 0; border-radius: 18px; overflow: hidden; cursor: zoom-in; background: #1A232B; }
+.slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 1.1s ease; }
+.slide.is-on { opacity: 1; }
+.slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 7s ease-out; }
+.slide.is-on img { transform: scale(1); }
+.ss-cap { position: absolute; left: 26px; bottom: 74px; max-width: calc(100% - 52px); padding: 7px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; line-height: 1.35; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,.35); pointer-events: none;
   background: rgba(20, 28, 36, .28); border: 1px solid rgba(255,255,255,.35); -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%); }
-.shot:hover { transform: translateY(-4px) rotate(-.4deg); }
-.gallery li:nth-child(even) .shot:hover { transform: translateY(-4px) rotate(.4deg); }
-.shot:focus-visible { outline: 2px solid var(--cable); outline-offset: 3px; }
-@media (max-width: 1080px) {
-  .gallery { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(230px, 46%); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 12px; scrollbar-width: thin; }
-  .gallery li { scroll-snap-align: start; }
-}
-@media (max-width: 560px) { .gallery { grid-auto-columns: 78%; } }
+.ss-arrow { position: absolute; top: calc(50% - 30px); display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 24px; line-height: 1; color: #fff; opacity: 0; transition: opacity .2s, background .2s;
+  border: 1px solid rgba(255,255,255,.35); background: rgba(20, 28, 36, .22); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.ss-prev { left: 22px; }
+.ss-next { right: 22px; }
+.slideshow:hover .ss-arrow, .ss-arrow:focus-visible { opacity: 1; }
+.ss-arrow:hover { background: rgba(20, 28, 36, .4); }
+@media (hover: none) { .ss-arrow { opacity: 1; } }
+.ss-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 6px 2px 10px; }
+.ss-dots { display: flex; gap: 8px; }
+.dot { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 999px; cursor: pointer; background: color-mix(in srgb, var(--ink) 22%, transparent); transition: width .3s, background .3s; }
+.dot.is-on { width: 26px; background: var(--cable); }
+.ss-pause { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border-radius: 50%; cursor: pointer; color: var(--ink); border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 50%, transparent); }
+.ss-pause svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.ss-pause .i-play { display: none; fill: currentColor; stroke-width: 1.5; }
+.ss-pause[aria-pressed="true"] .i-pause { display: none; }
+.ss-pause[aria-pressed="true"] .i-play { display: block; }
+.ss-progress { position: absolute; left: 20px; right: 20px; top: 20px; height: 3px; border-radius: 3px; overflow: hidden; background: rgba(255,255,255,.25); pointer-events: none; }
+.ss-progress i { display: block; height: 100%; width: 100%; transform-origin: left; transform: scaleX(0); background: rgba(255,255,255,.9); }
+.ss-progress i.run { animation: ss-fill var(--ss-ms, 5000ms) linear forwards; }
+.slideshow.paused .ss-progress i { animation-play-state: paused; }
+@keyframes ss-fill { to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { .slide, .slide img { transition: none; transform: none; } .slide.is-on img { transform: none; } }
 
 .lightbox { width: fit-content; max-width: min(92vw, 900px); max-height: 92vh; padding: 14px; border: 1px solid rgba(255,255,255,.25); border-radius: 22px; color: #fff; overflow: visible;
   background: rgba(16, 23, 30, .55); -webkit-backdrop-filter: blur(24px) saturate(160%); backdrop-filter: blur(24px) saturate(160%); box-shadow: 0 40px 80px -30px rgba(0,0,0,.7); }
@@ -317,7 +339,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .lb-prev { left: -22px; top: 50%; transform: translateY(-50%); }
 .lb-next { right: -22px; top: 50%; transform: translateY(-50%); }
 @media (max-width: 700px) { .lb-prev { left: 8px; } .lb-next { right: 8px; } .lb-close { top: 8px; right: 8px; } }
-@media (prefers-reduced-motion: reduce) { .shot, .shot:hover, .gallery li:nth-child(even) .shot:hover { transform: none; transition: none; } }
 
 /* skills: 2x2 rack */
 .rack { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
@@ -361,7 +382,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .pulse { animation: none; }
 }
 </style>
-<link rel="stylesheet" href="css/glass.css?v=12">
+<link rel="stylesheet" href="css/glass.css?v=13">
 </head>
 <body>
 <div class="aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
@@ -662,15 +683,25 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="wrap">
       <div class="sec-head">
         <div class="t"><span class="eyebrow">About me</span><h2>Off the clock</h2></div>
-        <p class="note">Away from the server room: city walks, winter trips and a lot of good food. Tap a photo to see it full size.</p>
+        <p class="note">Away from the server room: city walks, winter trips and a lot of good food. A new photo every few seconds; tap one to see it full size.</p>
       </div>
-      <ul class="gallery">
-          <li><button class="shot" type="button" aria-label="Open photo: The Bund, Shanghai"><img src="images/me/shanghai.jpg" alt="Standing by the river on the Bund in Shanghai at sunset, with the Oriental Pearl Tower behind" width="1000" height="1333" loading="lazy" style="object-position:35% 50%"><span class="cap">The Bund, Shanghai</span></button></li>
-          <li><button class="shot" type="button" aria-label="Open photo: Winter trip, bundled up"><img src="images/me/winter.jpg" alt="A close-up selfie in a beanie and a fur-hooded parka under a blue winter sky" width="1000" height="1333" loading="lazy" style="object-position:50% 40%"><span class="cap">Winter trip, bundled up</span></button></li>
-          <li><button class="shot" type="button" aria-label="Open photo: Showing a friend around Taipei"><img src="images/me/taipei.jpg" alt="Standing with a friend on a Taipei street next to a tourist information sign" width="1000" height="1333" loading="lazy" style="object-position:45% 50%"><span class="cap">Showing a friend around Taipei</span></button></li>
-          <li><button class="shot" type="button" aria-label="Open photo: Lunch, carried hands-free"><img src="images/me/snack.jpg" alt="Posing outside a restaurant with a bag of snacks balanced on my head" width="1000" height="1333" loading="lazy" style="object-position:50% 50%"><span class="cap">Lunch, carried hands-free</span></button></li>
-          <li><button class="shot" type="button" aria-label="Open photo: Korean BBQ, bib on"><img src="images/me/goldpig.jpg" alt="Wearing a paper bib inside Gold Pig, a Korean barbecue restaurant" width="1000" height="1333" loading="lazy" style="object-position:62% 50%"><span class="cap">Korean BBQ, bib on</span></button></li>
-      </ul>
+      <div class="slideshow" id="slideshow" role="region" aria-roledescription="carousel" aria-label="Photos of me">
+        <button class="ss-stage" type="button" aria-label="Open this photo full size">
+          <span class="slide is-on" data-cap="The Bund, Shanghai"><img src="images/me/shanghai.jpg" alt="Standing by the river on the Bund in Shanghai at sunset, with the Oriental Pearl Tower behind" width="1000" height="1333" style="object-position:35% 50%"></span>
+          <span class="slide" data-cap="Winter trip, bundled up"><img src="images/me/winter.jpg" alt="A close-up selfie in a beanie and a fur-hooded parka under a blue winter sky" width="1000" height="1333" loading="lazy" style="object-position:50% 40%"></span>
+          <span class="slide" data-cap="Showing a friend around Taipei"><img src="images/me/taipei.jpg" alt="Standing with a friend on a Taipei street next to a tourist information sign" width="1000" height="1333" loading="lazy" style="object-position:45% 50%"></span>
+          <span class="slide" data-cap="Lunch, carried hands-free"><img src="images/me/snack.jpg" alt="Posing outside a restaurant with a bag of snacks balanced on my head" width="1000" height="1333" loading="lazy" style="object-position:50% 50%"></span>
+          <span class="slide" data-cap="Korean BBQ, bib on"><img src="images/me/goldpig.jpg" alt="Wearing a paper bib inside Gold Pig, a Korean barbecue restaurant" width="1000" height="1333" loading="lazy" style="object-position:62% 50%"></span>
+        </button>
+        <span class="ss-cap" id="ss-cap" aria-live="polite">The Bund, Shanghai</span>
+        <button class="ss-arrow ss-prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+        <button class="ss-arrow ss-next" type="button" aria-label="Next photo">&rsaquo;</button>
+        <div class="ss-bar">
+          <div class="ss-dots"><button class="dot is-on" type="button" aria-label="Show photo 1" aria-current="true"></button><button class="dot" type="button" aria-label="Show photo 2"></button><button class="dot" type="button" aria-label="Show photo 3"></button><button class="dot" type="button" aria-label="Show photo 4"></button><button class="dot" type="button" aria-label="Show photo 5"></button></div>
+          <button class="ss-pause" type="button" aria-pressed="false" aria-label="Pause slideshow"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M8 5v14M16 5v14"/><path class="i-play" d="M7 5l12 7-12 7z"/></svg></button>
+        </div>
+        <div class="ss-progress" aria-hidden="true"><i></i></div>
+      </div>
     </div>
   </section>
 
@@ -741,29 +772,74 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   document.querySelectorAll('main > section[id]').forEach(function (s) { io.observe(s); });
 })();
 
-/* About me: lightbox for the photo strip */
+/* About me: single-photo slideshow on a timer, plus a full-size viewer */
 (function () {
-  var box = document.getElementById('lightbox');
-  if (!box || typeof box.showModal !== 'function') return;
-  var shots = Array.prototype.slice.call(document.querySelectorAll('.gallery .shot'));
-  var img = document.getElementById('lb-img'), cap = document.getElementById('lb-cap');
-  var at = 0;
-  function show(i) {
-    at = (i + shots.length) % shots.length;
-    var src = shots[at].querySelector('img');
-    img.src = src.getAttribute('src'); img.alt = src.alt;
-    cap.textContent = shots[at].querySelector('.cap').textContent;
+  var root = document.getElementById('slideshow');
+  if (!root) return;
+  var slides = Array.prototype.slice.call(root.querySelectorAll('.slide'));
+  var dots = Array.prototype.slice.call(root.querySelectorAll('.dot'));
+  var cap = document.getElementById('ss-cap');
+  var bar = root.querySelector('.ss-progress i');
+  var pauseBtn = root.querySelector('.ss-pause');
+  var MS = 5000;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var at = 0, timer = null, userPaused = reduce, hover = false, viewing = false;
+  root.style.setProperty('--ss-ms', MS + 'ms');
+
+  function go(i) {
+    at = (i + slides.length) % slides.length;
+    slides.forEach(function (s, k) { s.classList.toggle('is-on', k === at); });
+    dots.forEach(function (d, k) { d.classList.toggle('is-on', k === at); if (k === at) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
+    cap.textContent = slides[at].getAttribute('data-cap');
+    restart();
   }
-  shots.forEach(function (b, i) { b.addEventListener('click', function () { show(i); box.showModal(); }); });
-  box.querySelector('.lb-prev').addEventListener('click', function () { show(at - 1); });
-  box.querySelector('.lb-next').addEventListener('click', function () { show(at + 1); });
-  box.querySelector('.lb-close').addEventListener('click', function () { box.close(); });
-  box.addEventListener('click', function (e) { if (e.target === box) box.close(); });
-  box.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowLeft') show(at - 1);
-    if (e.key === 'ArrowRight') show(at + 1);
-  });
-  box.addEventListener('close', function () { if (shots[at]) shots[at].focus(); });
+  function running() { return !userPaused && !hover && !viewing && !document.hidden; }
+  function restart() {
+    clearTimeout(timer);
+    bar.classList.remove('run'); void bar.offsetWidth;
+    if (!running()) { root.classList.add('paused'); return; }
+    root.classList.remove('paused');
+    bar.classList.add('run');
+    timer = setTimeout(function () { go(at + 1); }, MS);
+  }
+  function paintPause() {
+    pauseBtn.setAttribute('aria-pressed', String(userPaused));
+    pauseBtn.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
+  }
+
+  root.querySelector('.ss-prev').addEventListener('click', function () { go(at - 1); });
+  root.querySelector('.ss-next').addEventListener('click', function () { go(at + 1); });
+  dots.forEach(function (d, k) { d.addEventListener('click', function () { go(k); }); });
+  pauseBtn.addEventListener('click', function () { userPaused = !userPaused; paintPause(); restart(); });
+  root.addEventListener('mouseenter', function () { hover = true; restart(); });
+  root.addEventListener('mouseleave', function () { hover = false; restart(); });
+  document.addEventListener('visibilitychange', restart);
+
+  /* full-size viewer */
+  var box = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lb-img'), lbCap = document.getElementById('lb-cap');
+  var lbAt = 0;
+  function lbShow(i) {
+    lbAt = (i + slides.length) % slides.length;
+    var im = slides[lbAt].querySelector('img');
+    lbImg.src = im.getAttribute('src'); lbImg.alt = im.alt;
+    lbCap.textContent = slides[lbAt].getAttribute('data-cap');
+  }
+  if (box && typeof box.showModal === 'function') {
+    root.querySelector('.ss-stage').addEventListener('click', function () { lbShow(at); viewing = true; restart(); box.showModal(); });
+    box.querySelector('.lb-prev').addEventListener('click', function () { lbShow(lbAt - 1); });
+    box.querySelector('.lb-next').addEventListener('click', function () { lbShow(lbAt + 1); });
+    box.querySelector('.lb-close').addEventListener('click', function () { box.close(); });
+    box.addEventListener('click', function (e) { if (e.target === box) box.close(); });
+    box.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') lbShow(lbAt - 1);
+      if (e.key === 'ArrowRight') lbShow(lbAt + 1);
+    });
+    box.addEventListener('close', function () { viewing = false; go(lbAt); root.querySelector('.ss-stage').focus(); });
+  }
+
+  paintPause();
+  restart();
 })();
 
 /* CAM-01: random cats from The Cat API, with a burst of static between channels */
@@ -844,6 +920,6 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   nextCat();
 })();
 </script>
-<script src="js/site.js?v=12"></script>
+<script src="js/site.js?v=13"></script>
 </body>
 </html>

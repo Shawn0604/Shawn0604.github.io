@@ -57,7 +57,7 @@
 
 /* ---------- the glass surface ---------- */
 .feature, .proj, .unit, .school, .earlier a, .all-projects, .jobs, .status, .btn:not(.solid),
-.card, .chipbar, .practice li, .stats > div, .shot {
+.card, .chipbar, .practice li, .stats > div, .slideshow {
   background: var(--glass-bg);
   border: 1px solid var(--glass-rim);
   -webkit-backdrop-filter: var(--glass-blur);

@@ -42,7 +42,7 @@ Plain HTML, CSS and JavaScript. No framework and no build step, served straight 
 | Projects | `#projects` | 精選專案：TUYA 大卡片、3 張專案卡、早期作品，最下面是「See all projects →」 |
 | Skills | `#skills` | 「What's in the rack」，四張技能卡片，下面是語言能力 |
 | Education | `#education` | RMIT（即將入學）、台師大 |
-| About me | `#me` | 「Off the clock」生活照，點照片會用毛玻璃視窗放大，可以用左右鍵切換 |
+| About me | `#me` | 「Off the clock」生活照：一次顯示一張，每 5 秒自動換下一張。點照片會用毛玻璃視窗放大 |
 | Contact | `#contact` | Email（有複製按鈕）、GitHub、LinkedIn |
 
 ### `projects.html`：完整作品索引
@@ -127,10 +127,14 @@ Shawn0604.github.io/
 ### 新增或更換 About me 的照片
 
 1. 把照片縮到寬 1000px 左右（約 200–350 KB），放進 `images/me/`。
-2. 在 `index.html` 搜尋 `class="gallery"`，複製一個 `<li>`，改 `src`、`alt`（給螢幕閱讀器的描述）和 `.cap`（照片上的說明）。
-3. 照片會裁成 3:4。如果人物被切到，調整 `style="object-position:50% 50%"`，第一個數字是左右位置、第二個是上下位置。
+2. 在 `index.html` 搜尋 `class="slide`，複製一行 `<span class="slide" ...>`，改 `src`、`alt`（給螢幕閱讀器的描述）和 `data-cap`（照片上的說明）。
+3. 在 `class="ss-dots"` 裡多加一個 `<button class="dot" ...>`，小圓點的數量要跟照片一樣多。
+4. 照片會裁成 3:4。如果人物被切到，調整 `style="object-position:50% 50%"`，第一個數字是左右位置，第二個是上下位置。
 
-電腦上一排放 5 張，超過 5 張會換到下一排。平板和手機上會變成可以左右滑的一列。
+輪播規則：
+- 每 5 秒換一張。要改間隔，修改 `index.html` 裡的 `var MS = 5000`（單位是毫秒）。
+- 滑鼠停在照片上、打開放大視窗、或切到別的分頁時，輪播會暫停。
+- 右下角有暫停／播放按鈕。系統開啟「減少動態效果」時，預設是暫停的。
 
 ### 修改經歷、技能、學歷
 
@@ -151,16 +155,16 @@ GitHub Pages 會讓瀏覽器把檔案快取 **10 分鐘**。如果只更新了�
 
 ```html
 <!-- index.html 和 projects.html -->
-<link rel="stylesheet" href="css/glass.css?v=12">
+<link rel="stylesheet" href="css/glass.css?v=13">
 
 <!-- index.html 和 projects.html -->
-<script src="js/site.js?v=12"></script>
+<script src="js/site.js?v=13"></script>
 
 <!-- projects.html -->
-<script src="data/projects.js?v=12"></script>
+<script src="data/projects.js?v=13"></script>
 ```
 
-目前的版本號是 `v=12`。改 `index.html`、`projects.html` 本身不用改版本號。
+目前的版本號是 `v=13`。改 `index.html`、`projects.html` 本身不用改版本號。
 
 ---
 
