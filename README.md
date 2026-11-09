@@ -72,7 +72,11 @@ Shawn0604.github.io/
 │   ├── me/             About me 的生活照（已縮到 1000px 寬）
 │   ├── tuya-home.jpg   首頁 TUYA 卡片的截圖（800×506）
 │   └── tuya-icon.png   TUYA 的圖示（48×48）
-├── favicon.svg         分頁圖示
+├── favicon.svg / favicon.ico / favicon-16x16.png / favicon-32x32.png
+│                       分頁圖示（橘色貓咪）。改圖示時，記得把 HTML 裡圖示網址的 ?v= 加 1
+├── apple-touch-icon.png、android-chrome-*.png
+│                       加到手機主畫面時的圖示
+├── site.webmanifest    手機「加到主畫面」用的名稱、圖示和顏色
 └── README.md
 ```
 
