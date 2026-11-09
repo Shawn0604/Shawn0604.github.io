@@ -159,16 +159,16 @@ GitHub Pages 會讓瀏覽器把檔案快取 **10 分鐘**。如果只更新了�
 
 ```html
 <!-- index.html 和 projects.html -->
-<link rel="stylesheet" href="css/glass.css?v=13">
+<link rel="stylesheet" href="css/glass.css?v=14">
 
 <!-- index.html 和 projects.html -->
-<script src="js/site.js?v=13"></script>
+<script src="js/site.js?v=14"></script>
 
 <!-- projects.html -->
-<script src="data/projects.js?v=13"></script>
+<script src="data/projects.js?v=14"></script>
 ```
 
-目前的版本號是 `v=13`。改 `index.html`、`projects.html` 本身不用改版本號。
+目前的版本號是 `v=14`。改 `index.html`、`projects.html` 本身不用改版本號。
 
 ---
 
@@ -201,7 +201,7 @@ GitHub Pages 會讓瀏覽器把檔案快取 **10 分鐘**。如果只更新了�
 
 ### 共用互動（`js/site.js`）
 - **深淺色切換**：導覽列的太陽／月亮按鈕。選擇會存在 `localStorage`，下次打開會記得。沒選過就跟著系統設定。`<head>` 裡有一小段 script 會在頁面畫出來之前先套用主題，避免閃一下。
-- **手機選單**：寬度小於 900px 時，導覽連結會收進漢堡按鈕。點連結、按 Esc 或點選單外面都會關閉選單。
+- **手機選單**：寬度小於 1120px 時，導覽連結會收進漢堡按鈕。點連結、按 Esc 或點選單外面都會關閉選單。
 - **捲動淡入**：區塊標題和卡片進入畫面時，會從下方淡入，同一排的卡片會依序出現。一開始就在畫面裡的元素不套用這個效果。
 - **玻璃反光**：用滑鼠移過卡片時，會有一圈柔光跟著游標移動。只在有滑鼠的裝置上啟用。
 

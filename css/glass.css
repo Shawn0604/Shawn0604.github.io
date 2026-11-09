@@ -153,8 +153,10 @@ footer .wrap { border-top-color: color-mix(in srgb, var(--line) 55%, transparent
 #theme-btn[aria-pressed="true"] .moon { display: block; }
 .top .wrap { gap: 12px; }
 .top .nav { margin-right: 12px; }
+.nav a { white-space: nowrap; }
 #menu-btn { display: none; }
-@media (max-width: 900px) {
+@media (max-width: 1120px) {
+  .top .nav { display: none; }
   #menu-btn { display: inline-grid; }
   #menu-btn .x { display: none; }
   .top.open #menu-btn .x { display: block; }
